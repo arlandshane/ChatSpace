@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const path = require("path");
+const ejs = require("ejs");
 const Book = require("./models/books");
 
 const app = express();
@@ -19,16 +21,28 @@ const connectDB = async () => {
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-	res.sendFile(__dirname + "/index.html");
+app.get("/", async (req, res) => {
+	const books = await Book.find();
+	ejs.renderFile(
+		path.join(__dirname, "index.ejs"),
+		{ books },
+		(err, html) => {
+			if (err) {
+				console.log(err);
+				res.status(500).send("Error rendering template");
+			} else {
+				res.send(html);
+			}
+		}
+	);
 });
 
-app.post("/books", async (req, res) => {
+app.post("/", async (req, res) => {
 	const { title, author } = req.body;
 	try {
 		const book = new Book({ title, author });
 		await book.save();
-		res.send(`Book '${title}' by '${author}' added successfully`);
+		res.redirect("/");
 	} catch (error) {
 		console.log(error);
 		res.status(500).send("Error adding book");
