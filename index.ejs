@@ -3,11 +3,11 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Books</title>
+		<title>Chatting Game</title>
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 	<body>
-		<h1>Books</h1>
+		<h1>Chatting Game</h1>
 		<form action="/" method="post">
 			<div class="grid">
 				<label class="label" for="name">Name:</label>
@@ -34,7 +34,11 @@
 		</form> -->
 		<ul>
 			<% persons.forEach(function(person) { %>
-			<li><%= person.name %> by <%= person.message %></li>
+			<li>
+				<%= person.name %> says "<span style="color: gray"
+					><%= person.message %></span
+				>"
+			</li>
 			<% }); %>
 		</ul>
 	</body>
