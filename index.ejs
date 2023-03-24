@@ -4,16 +4,34 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Books</title>
+		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 	<body>
 		<h1>Books</h1>
 		<form action="/" method="post">
-			<label for="title">Title:</label>
-			<input type="text" name="title" id="title" placeholder="Title" />
-			<label for="author">Author:</label>
-			<input type="text" name="author" id="author" placeholder="Author" />
-			<button type="submit">Add</button>
+			<div class="grid">
+				<label class="label" for="title">Title:</label>
+				<input
+					class="input-box"
+					type="text"
+					name="title"
+					id="title"
+					placeholder="Title"
+				/>
+				<label class="label" for="author">Author:</label>
+				<input
+					class="input-box"
+					type="text"
+					name="author"
+					id="author"
+					placeholder="Author"
+				/>
+				<button class="add-btn" type="submit">Add</button>
+			</div>
 		</form>
+		<!-- <form method="post" action="/delete-database">
+			<button type="submit">Delete database</button>
+		</form> -->
 		<ul>
 			<% books.forEach(function(book) { %>
 			<li><%= book.title %> by <%= book.author %></li>

@@ -20,6 +20,7 @@ const connectDB = async () => {
 };
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
 	const books = await Book.find();
@@ -48,6 +49,17 @@ app.post("/", async (req, res) => {
 		res.status(500).send("Error adding book");
 	}
 });
+
+// app.post("/delete-database", async (req, res) => {
+// 	try {
+// 		await Book.deleteMany();
+// 		console.log("Database deleted");
+// 		res.redirect("/");
+// 	} catch (error) {
+// 		console.log(error);
+// 		res.status(500).send("Error deleting database");
+// 	}
+// });
 
 connectDB().then(() => {
 	app.listen(PORT, () => {
