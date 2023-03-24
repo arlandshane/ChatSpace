@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const ejs = require("ejs");
-const Book = require("./models/books");
+const Person = require("./models/person");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,10 +23,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
-	const books = await Book.find();
+	const persons = await Person.find();
 	ejs.renderFile(
 		path.join(__dirname, "index.ejs"),
-		{ books },
+		{ persons },
 		(err, html) => {
 			if (err) {
 				console.log(err);
@@ -39,14 +39,14 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-	const { title, author } = req.body;
+	const { name, message } = req.body;
 	try {
-		const book = new Book({ title, author });
-		await book.save();
+		const person = new Person({ name, message });
+		await person.save();
 		res.redirect("/");
 	} catch (error) {
 		console.log(error);
-		res.status(500).send("Error adding book");
+		res.status(500).send("Error adding message");
 	}
 });
 
