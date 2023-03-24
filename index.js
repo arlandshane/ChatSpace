@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const Book = require("./models/books");
 
 const app = express();
@@ -16,33 +17,21 @@ const connectDB = async () => {
 	}
 };
 
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
-	res.send({ title: "Books" });
+	res.sendFile(__dirname + "/index.html");
 });
 
-app.get("/add-note", async (req, res) => {
+app.post("/books", async (req, res) => {
+	const { title, author } = req.body;
 	try {
-		await Book.insertMany([
-			{
-				title: "Inferno",
-				body: "Dan Brown",
-			},
-			{
-				title: "Alchemist",
-				body: "Paulo Coelho",
-			},
-		]);
+		const book = new Book({ title, author });
+		await book.save();
+		res.send(`Book '${title}' by '${author}' added successfully`);
 	} catch (error) {
-		console.log("err", +error);
-	}
-});
-
-app.get("/books", async (req, res) => {
-	const book = await Book.find();
-	if (book) {
-		res.json(book);
-	} else {
-		res.send("Something went wrong");
+		console.log(error);
+		res.status(500).send("Error adding book");
 	}
 });
 
