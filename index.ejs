@@ -10,21 +10,23 @@
 		<h1>Chatting Game</h1>
 		<form action="/" method="post">
 			<div class="grid">
-				<label class="label" for="name">Name:</label>
+				<label class="label" for="name">Name: *</label>
 				<input
 					class="input-box"
 					type="text"
 					name="name"
 					id="name"
 					placeholder="Your name"
+					required
 				/>
-				<label class="label" for="message">Message:</label>
+				<label class="label" for="message">Message: *</label>
 				<input
 					class="input-box"
 					type="text"
 					name="message"
 					id="message"
 					placeholder="Your message"
+					required
 				/>
 				<button class="add-btn" type="submit">Add</button>
 			</div>
