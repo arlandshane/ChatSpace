@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Register</title>
+		<link rel="stylesheet" href="/css/style.css" />
+	</head>
+	<body>
+		<h1>Register</h1>
+		<form action="/register" method="post">
+			<label for="username">Username:</label>
+			<input
+				class="input-box"
+				type="text"
+				name="username"
+				id="username"
+				required
+			/>
+			<label for="email">Email:</label>
+			<input
+				class="input-box"
+				type="email"
+				name="email"
+				id="email"
+				required
+			/>
+			<label for="password">Password:</label>
+			<input
+				class="input-box"
+				type="text"
+				name="password"
+				id="password"
+				required
+			/>
+			<button class="btn" value="submit">Register</button>
+		</form>
+		<a href="/login"><button class="btn">Login</button></a>
+		<script>
+			const passwordInput = document.getElementById("password");
+			const loginButton = document.querySelector("button[type='submit']");
+
+			passwordInput.addEventListener("input", function () {
+				const password = passwordInput.value;
+				const strengthLabel =
+					document.getElementById("password-strength");
+				let strength = "";
+				if (password.length < 8) {
+					strength = "Weak";
+					loginButton.disabled = true;
+				} else if (password.length < 12) {
+					strength = "Moderate";
+					loginButton.disabled = false;
+				} else {
+					strength = "Strong";
+					loginButton.disabled = false;
+				}
+				strengthLabel.innerHTML = strength;
+			});
+		</script>
+	</body>
+</html>

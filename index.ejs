@@ -8,44 +8,35 @@
 	</head>
 	<body>
 		<h1>Chatting Space</h1>
+		<a href="/login"><button class="btn">Login</button></a>
+		<a href="/register"><button class="btn">Register</button></a>
+		<a href="/logout"><button class="btn">Logout</button></a>
+		<hr />
 		<form action="/" method="post">
-			<div class="grid">
-				<label class="label" for="name">Name: *</label>
-				<input
-					class="input-box"
-					type="text"
-					name="name"
-					id="name"
-					placeholder="Your name"
-					required
-				/>
-				<label class="label" for="message">Message: *</label>
-				<input
-					class="input-box"
-					type="text"
-					name="message"
-					id="message"
-					placeholder="Your message"
-					required
-				/>
-				<button class="add-btn" type="submit">Add</button>
-			</div>
+			<input
+				class="input-box"
+				type="text"
+				name="message"
+				id="message"
+				placeholder="Your message"
+				required
+			/>
+			<button class="btn" type="submit">Add</button>
 		</form>
-		<!-- <form method="post" action="/delete-database">
-			<button type="submit">Delete database</button>
-		</form> -->
-		<% persons.forEach(function(person) { %>
+		<h2>Messages:</h2>
+		<% persons.slice().reverse().forEach(function(person) { %>
 		<p
 			style="
 				margin: 0.5rem;
-				padding: 0.2rem;
+				padding: 0.3rem 0.5rem;
 				background-color: lavender;
 				border-radius: 0.2rem;
 				width: fit-content;
 			"
 		>
-			<%= person.name.charAt(0).toUpperCase() + person.name.slice(1) %>
-			says "<span style="color: gray"><%= person.message %></span>"
+			<%= person.name %> says "<span style="color: gray"
+				><%= person.message %></span
+			>"
 		</p>
 
 		<% }); %>
