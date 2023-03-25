@@ -3,11 +3,11 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Chatting Game</title>
+		<title>Chatting Space</title>
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 	<body>
-		<h1>Chatting Game</h1>
+		<h1>Chatting Space</h1>
 		<form action="/" method="post">
 			<div class="grid">
 				<label class="label" for="name">Name: *</label>
@@ -34,14 +34,20 @@
 		<!-- <form method="post" action="/delete-database">
 			<button type="submit">Delete database</button>
 		</form> -->
-		<ul>
-			<% persons.forEach(function(person) { %>
-			<li>
-				<%= person.name %> says "<span style="color: gray"
-					><%= person.message %></span
-				>"
-			</li>
-			<% }); %>
-		</ul>
+		<% persons.forEach(function(person) { %>
+		<p
+			style="
+				margin: 0.5rem;
+				padding: 0.2rem;
+				background-color: lavender;
+				border-radius: 0.2rem;
+				width: fit-content;
+			"
+		>
+			<%= person.name.charAt(0).toUpperCase() + person.name.slice(1) %>
+			says "<span style="color: gray"><%= person.message %></span>"
+		</p>
+
+		<% }); %>
 	</body>
 </html>
