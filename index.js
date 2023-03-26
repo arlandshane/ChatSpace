@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const ejs = require("ejs");
 const Person = require("./models/person");
+const User = require("./models/user");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -44,6 +45,52 @@ app.get("/", async (req, res) => {
 			}
 		}
 	);
+});
+
+app.get("/register", (req, res) => {
+	res.sendFile(__dirname + "/register.html");
+});
+
+app.get("/login", (req, res) => {
+	res.sendFile(__dirname + "/login.html");
+});
+
+app.post("/login", async (req, res) => {
+	const { emailOrUsername, password } = req.body;
+	try {
+		const user = await User.findOne({
+			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
+		});
+		if (user && user.password === password) {
+			req.session.username = user.username;
+			res.redirect("/");
+		} else {
+			res.status(401).send("Invalid credentials");
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("<h1>Error:500</h1><p>Error logging in</p>");
+	}
+});
+
+app.post("/register", async (req, res) => {
+	const { email, username, password } = req.body;
+	try {
+		const user = new User({ email, username, password });
+		await user.save();
+		req.session.username = user.username;
+		res.redirect("/");
+	} catch (error) {
+		console.log(error);
+		res.status(500).send(
+			"<h1>Error: 500</h1><p>Error registering user.<br>You could already be registered, try <a href='/login'>login</a></p>"
+		);
+	}
+});
+
+app.get("/logout", (req, res) => {
+	req.session.destroy();
+	res.redirect("/login");
 });
 
 app.post("/", async (req, res) => {
