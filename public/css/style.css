@@ -5,12 +5,39 @@ body {
 	font-family: "Montserrat", sans-serif;
 }
 
+nav {
+	display: flex;
+	justify-content: space-between;
+	padding: 1rem;
+}
+
+h1 {
+	margin: 0;
+	align-self: center;
+}
+
+.nav-btns {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.nav-link {
+	display: inline;
+}
+
 .grid {
 	display: grid;
 }
 
 .label {
 	font-family: "Montserrat", sans-serif;
+}
+
+#message {
+	width: 50%;
+	height: 5rem;
+	padding: 0.5rem;
+	line-height: 1rem;
 }
 
 .input-box {
@@ -23,7 +50,6 @@ body {
 }
 
 .btn {
-	margin: 0.5rem;
 	width: 4.5rem;
 	height: 2rem;
 	border-radius: 1rem;
@@ -32,10 +58,35 @@ body {
 	cursor: pointer;
 }
 
-.add-btn:hover {
+.btn:hover {
 	background-color: cornflowerblue;
 }
 
 ::placeholder {
 	padding: 0 0.5rem;
+	font-size: 1rem;
+}
+
+.each-message {
+	display: inline-flex;
+	margin: 0.5rem;
+	padding: 0.3rem 0.5rem;
+	background-color: lavender;
+	border-radius: 0.2rem;
+}
+
+.like-btn {
+	font-size: 1.2rem;
+	padding: 0;
+	transition-duration: 100ms;
+	background: none;
+	border: none;
+}
+
+.like-btn:hover {
+	transform: scale(1.5);
+}
+
+.react-count {
+	font-size: 0.8rem;
 }
