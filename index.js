@@ -21,7 +21,7 @@ const connectDB = async () => {
 	}
 };
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(express.static("public"));
 app.use(
 	session({
@@ -80,7 +80,9 @@ app.post("/login", async (req, res) => {
 			req.session.username = user.username;
 			res.redirect("/");
 		} else {
-			res.status(401).send("<h1>Error: 401</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>");
+			res.status(401).send(
+				"<h1>Error: 401</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>"
+			);
 		}
 	} catch (error) {
 		console.log(error);
