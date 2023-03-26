@@ -80,11 +80,11 @@ app.post("/login", async (req, res) => {
 			req.session.username = user.username;
 			res.redirect("/");
 		} else {
-			res.status(401).send("Invalid credentials");
+			res.status(401).send("<h1>Error: 401</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>");
 		}
 	} catch (error) {
 		console.log(error);
-		res.status(500).send("<h1>Error:500</h1><p>Error logging in</p>");
+		res.status(500).send("<h1>Error: 500</h1><p>Error logging in</p>");
 	}
 });
 

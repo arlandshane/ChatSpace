@@ -12,16 +12,18 @@
 		<a href="/register"><button class="btn">Register</button></a>
 		<a href="/logout"><button class="btn">Logout</button></a>
 		<hr />
-		<form action="/" method="post">
-			<input
+		<form style="display: flex" action="/" method="post">
+			<textarea
 				class="input-box"
 				type="text"
 				name="message"
 				id="message"
 				placeholder="Your message"
 				required
-			/>
-			<button class="btn" type="submit">Add</button>
+			></textarea>
+			<button style="align-self: flex-end" class="btn" type="submit">
+				Add
+			</button>
 		</form>
 		<h2>Messages:</h2>
 		<% persons.slice().reverse().forEach(function(person) { %>
