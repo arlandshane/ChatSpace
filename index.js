@@ -66,28 +66,6 @@ app.get("/register", (req, res) => {
 	res.sendFile(__dirname + "/register.html");
 });
 
-app.get("/login", (req, res) => {
-	res.sendFile(__dirname + "/login.html");
-});
-
-app.get("/logout", (req, res) => {
-	req.session.destroy();
-	res.redirect("/login");
-});
-
-app.post("/", async (req, res) => {
-	const { message } = req.body;
-	const name = req.session.username;
-	try {
-		const person = new Person({ name, message });
-		await person.save();
-		res.redirect("/");
-	} catch (error) {
-		console.log(error);
-		res.status(500).send("<h1>Error: 500</h1><p>Error adding message</p>");
-	}
-});
-
 app.post("/register", async (req, res) => {
 	const { email, username, password } = req.body;
 	try {
@@ -101,6 +79,10 @@ app.post("/register", async (req, res) => {
 			"<h1>Error: 500</h1><p>Error registering user.<br>You could already be registered, try <a href='/login'>login</a></p>"
 		);
 	}
+});
+
+app.get("/login", (req, res) => {
+	res.sendFile(__dirname + "/login.html");
 });
 
 app.post("/login", async (req, res) => {
@@ -121,6 +103,11 @@ app.post("/login", async (req, res) => {
 		console.log(error);
 		res.status(500).send("<h1>Error: 500</h1><p>Error logging in</p>");
 	}
+});
+
+app.get("/logout", (req, res) => {
+	req.session.destroy();
+	res.redirect("/login");
 });
 
 connectDB().then(() => {
