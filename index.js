@@ -70,23 +70,21 @@ app.get("/login", (req, res) => {
 	res.sendFile(__dirname + "/login.html");
 });
 
-app.post("/login", async (req, res) => {
-	const { emailOrUsername, password } = req.body;
+app.get("/logout", (req, res) => {
+	req.session.destroy();
+	res.redirect("/login");
+});
+
+app.post("/", async (req, res) => {
+	const { message } = req.body;
+	const name = req.session.username;
 	try {
-		const user = await User.findOne({
-			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
-		});
-		if (user && user.password === password) {
-			req.session.username = user.username;
-			res.redirect("/");
-		} else {
-			res.status(401).send(
-				"<h1>Error: 401</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>"
-			);
-		}
+		const person = new Person({ name, message });
+		await person.save();
+		res.redirect("/");
 	} catch (error) {
 		console.log(error);
-		res.status(500).send("<h1>Error: 500</h1><p>Error logging in</p>");
+		res.status(500).send("<h1>Error: 500</h1><p>Error adding message</p>");
 	}
 });
 
@@ -105,20 +103,23 @@ app.post("/register", async (req, res) => {
 	}
 });
 
-app.get("/logout", (req, res) => {
-	req.session.destroy();
-	res.redirect("/login");
-});
-
-app.post("/", async (req, res) => {
-	const { name, message } = req.body;
+app.post("/login", async (req, res) => {
+	const { emailOrUsername, password } = req.body;
 	try {
-		const person = new Person({ name, message });
-		await person.save();
-		res.redirect("/");
+		const user = await User.findOne({
+			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
+		});
+		if (user && user.password === password) {
+			req.session.username = user.username;
+			res.redirect("/");
+		} else {
+			res.status(401).send(
+				"<h1>Error: 401</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>"
+			);
+		}
 	} catch (error) {
 		console.log(error);
-		res.status(500).send("Error adding message");
+		res.status(500).send("<h1>Error: 500</h1><p>Error logging in</p>");
 	}
 });
 
