@@ -50,12 +50,12 @@ h1 {
 }
 
 .btn {
+	margin: 0.5rem;
 	width: 4.5rem;
 	height: 2rem;
 	border-radius: 1rem;
 	border: 1px solid gray;
 	background-color: white;
-	cursor: pointer;
 }
 
 .btn:hover {

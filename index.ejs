@@ -7,46 +7,37 @@
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 	<body>
-		<nav>
-			<h1>Chatting Space</h1>
-			<div class="nav-btns">
-				<a class="nav-link" href="/login">
-					<button class="btn">Login</button>
-				</a>
-				<a class="nav-link" href="/register">
-					<button class="btn">Register</button>
-				</a>
-				<a class="nav-link" href="/logout">
-					<button class="btn">Logout</button>
-				</a>
-			</div>
-		</nav>
-
+		<h1>Chatting Space</h1>
+		<a href="/login"><button class="btn">Login</button></a>
+		<a href="/register"><button class="btn">Register</button></a>
+		<a href="/logout"><button class="btn">Logout</button></a>
 		<hr />
 		<form action="/" method="post">
-			<textarea
+			<input
 				class="input-box"
+				type="text"
 				name="message"
 				id="message"
 				placeholder="Your message"
 				required
-			></textarea>
+			/>
 			<button class="btn" type="submit">Add</button>
 		</form>
 		<h2>Messages:</h2>
 		<% persons.slice().reverse().forEach(function(person) { %>
-		<div style="display: inline; width: 10rem">
-			<p class="each-message">
-				<%= person.name %> says "<span style="color: gray"
-					><%= person.message %></span
-				>"
-			</p>
-			<button class="like-btn" data-message-id="<%= person.id %>">
-				❤️
-			</button>
-			<span class="react-count"></span>
-			<br />
-		</div>
+		<p
+			style="
+				margin: 0.5rem;
+				padding: 0.3rem 0.5rem;
+				background-color: lavender;
+				border-radius: 0.2rem;
+				width: fit-content;
+			"
+		>
+			<%= person.name %> says "<span style="color: gray"
+				><%= person.message %></span
+			>"
+		</p>
 
 		<% }); %>
 
