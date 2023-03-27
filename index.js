@@ -130,6 +130,7 @@ app.get("/:username", async (req, res) => {
 	} else {
 		try {
 			const user = await User.findOne({ username: req.params.username });
+			console.log("req.params.username: " + req.params.username);
 			ejs.renderFile(
 				path.join(__dirname, "profile.ejs"),
 				{ user },
