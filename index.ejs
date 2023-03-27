@@ -10,6 +10,7 @@
 	<body>
 		<nav style="display: flex; padding: 0 1rem">
 			<h1>Chatting Space</h1>
+			<img style="height: 3rem" src="<%= dp %>" alt="dp" />
 			<div>
 				<% if (currentUser) { %> <%= currentUser %>
 				<a href="/logout"><button class="btn">Logout</button></a>
@@ -37,9 +38,6 @@
 		<h2>Messages:</h2>
 		<% persons.slice().reverse().forEach(function(person) { %>
 		<div style="display: flex">
-			<% if(person.name===currentUser) { %>
-			<img style="width: 2rem; height: 2rem" src="<%= dp %>" alt="dp" />
-			<% } %>
 			<p
 				style="
 					margin: 0.5rem;

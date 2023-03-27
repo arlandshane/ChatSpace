@@ -96,14 +96,6 @@ h1 {
 	display: flex;
 }
 
-.profile-pictures {
-	border-radius: 100%;
-	width: 5rem;
-	height: 5rem;
-	text-align: center;
-	align-self: center;
-}
-
 .doodle {
 	cursor: pointer;
 	transition-duration: 200ms;
@@ -122,4 +114,11 @@ h1 {
 	height: 2rem;
 	background-color: white;
 	border: 1px solid gray;
+}
+
+.profile-picture {
+	display: flex;
+	border-radius: 100%;
+	width: 3rem;
+	height: 3rem;
 }

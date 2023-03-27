@@ -82,7 +82,7 @@ app.post("/login", async (req, res) => {
 		const user = await User.findOne({
 			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
 		});
-		req.session.profilePicUrl = user.profilePicUrl;
+		req.session.profilePicUrl = await user.profilePicUrl;
 		if (user && user.password === password) {
 			req.session.username = user.username;
 			console.log("username in /login: " + req.session.username);
