@@ -6,11 +6,20 @@
 		<title>Chatting Space</title>
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
+
 	<body>
-		<h1>Chatting Space</h1>
-		<a href="/login"><button class="btn">Login</button></a>
-		<a href="/register"><button class="btn">Register</button></a>
-		<a href="/logout"><button class="btn">Logout</button></a>
+		<nav style="display: flex; padding: 0 1rem">
+			<h1>Chatting Space</h1>
+			<div>
+				<% if (currentUser) { %> <%= currentUser %>
+				<a href="/logout"><button class="btn">Logout</button></a>
+				<% } else { %>
+				<a href="/login"><button class="btn">Login</button></a>
+				<a href="/register"><button class="btn">Register</button></a>
+				<% } %>
+			</div>
+		</nav>
+
 		<hr />
 		<form style="display: flex" action="/" method="post">
 			<textarea
@@ -27,22 +36,24 @@
 		</form>
 		<h2>Messages:</h2>
 		<% persons.slice().reverse().forEach(function(person) { %>
-		<p
-			style="
-				margin: 0.5rem;
-				padding: 0.3rem 0.5rem;
-				background-color: lavender;
-				border-radius: 0.2rem;
-				width: fit-content;
-			"
-		>
-			<%= person.name %> says "<span style="color: gray"
-				><%= person.message %></span
-			>"
-		</p>
-
+		<div style="display: flex">
+			<% if(person.name===currentUser) { %>
+			<img style="width: 2rem; height: 2rem" src="<%= dp %>" alt="dp" />
+			<% } %>
+			<p
+				style="
+					margin: 0.5rem;
+					padding: 0.3rem 0.5rem;
+					background-color: lavender;
+					border-radius: 0.2rem;
+					width: fit-content;
+				"
+			>
+				<%= person.name %> <br />
+				"<span style="color: gray"><%= person.message %></span>"
+			</p>
+		</div>
 		<% }); %>
-
 		<script src="/client.js"></script>
 	</body>
 </html>
