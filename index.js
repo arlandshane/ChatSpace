@@ -28,7 +28,6 @@ app.use(
 		secret: "shane_arland_secret_session_key",
 		resave: false,
 		saveUninitialized: false,
-		cookie: { maxAge: 3600000 },
 	})
 );
 
@@ -55,39 +54,12 @@ app.get("/", async (req, res) => {
 	}
 });
 
-app.post("/", async (req, res) => {
-	const { message } = req.body;
-	if (req.session.username) {
-		const name = req.session.username;
-		console.log("Username in /: " + name);
-		try {
-			const person = new Person({ name, message });
-			await person.save();
-			res.redirect("/");
-		} catch (error) {
-			console.log(error);
-			res.status(500).send(
-				"<h1>Error: 500</h1><p>Error adding message. You need to be connected to the internet and <span><a href='/login'>logged in</a></span></p>"
-			);
-		}
-	} else {
-		const name = "Unknown";
-		console.log("Username in /: " + name);
-		try {
-			const person = new Person({ name, message });
-			await person.save();
-			res.redirect("/");
-		} catch (error) {
-			console.log(error);
-			res.status(500).send(
-				"<h1>Error: 500</h1><p>Error adding message. You need to be connected to the internet and <span><a href='/login'>logged in</a></span></p>"
-			);
-		}
-	}
-});
-
 app.get("/register", (req, res) => {
 	res.sendFile(__dirname + "/register.html");
+});
+
+app.get("/login", (req, res) => {
+	res.sendFile(__dirname + "/login.html");
 });
 
 app.post("/register", async (req, res) => {
@@ -106,10 +78,6 @@ app.post("/register", async (req, res) => {
 	}
 });
 
-app.get("/login", (req, res) => {
-	res.sendFile(__dirname + "/login.html");
-});
-
 app.post("/login", async (req, res) => {
 	const { emailOrUsername, password } = req.body;
 	try {
@@ -117,9 +85,9 @@ app.post("/login", async (req, res) => {
 			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
 		});
 		req.session.profilePicUrl = user.profilePicUrl;
-		req.session.username = user.username;
 		if (user && user.password === password) {
-			console.log("Username in /login: " + req.session.username);
+			req.session.username = user.username;
+			console.log("username in /login: " + req.session.username);
 			res.redirect("/");
 		} else {
 			res.status(401).send(
@@ -129,6 +97,22 @@ app.post("/login", async (req, res) => {
 	} catch (error) {
 		console.log(error);
 		res.status(500).send("<h1>Error: 500</h1><p>Error logging in</p>");
+	}
+});
+
+app.post("/", async (req, res) => {
+	const { message } = req.body;
+	const name = req.session.username;
+	console.log("Username in /: " + name);
+	try {
+		const person = new Person({ name, message });
+		await person.save();
+		res.redirect("/");
+	} catch (error) {
+		console.log(error);
+		res.status(500).send(
+			"<h1>Error: 500</h1><p>Error adding message. You need to be connected to the internet and <span><a href='/login'>logged in</a></span></p>"
+		);
 	}
 });
 
