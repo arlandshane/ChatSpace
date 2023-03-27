@@ -67,9 +67,7 @@ app.post("/register", async (req, res) => {
 	try {
 		const user = new User({ username, profilePicUrl, email, password });
 		await user.save();
-		req.session.username = user.username;
-		console.log(user.profilePicUrl);
-		res.redirect("/");
+		res.redirect("/login");
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(
