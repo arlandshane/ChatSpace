@@ -10,7 +10,9 @@
 	<body>
 		<nav style="display: flex; padding: 0 1rem">
 			<h1>Chatting Space</h1>
-			<img style="height: 3rem" src="<%= dp %>" alt="dp" />
+			<a href="/<%= currentUser %>">
+				<img class="avatar" src="<%= dp %>" alt="dp" />
+			</a>
 			<div>
 				<% if (currentUser) { %> <%= currentUser %>
 				<a href="/logout"><button class="btn">Logout</button></a>

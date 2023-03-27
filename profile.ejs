@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Profile Page</title>
+		<link rel="stylesheet" href="/css/style.css" />
+	</head>
+	<body>
+		<nav style="padding: 0 1rem">
+			<h1>Profile Page</h1>
+			<a href="/"
+				><img
+					class="avatar"
+					src="<%= user.profilePicUrl %>"
+					alt="Profile Picture"
+			/></a>
+		</nav>
+		<hr />
+		<p>Username: <%= user.username %></p>
+		<p>Email: <%= user.email %></p>
+		<p>Password: <%= user.password %></p>
+	</body>
+</html>

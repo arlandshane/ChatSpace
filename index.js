@@ -122,6 +122,31 @@ app.post("/", async (req, res) => {
 	}
 });
 
+app.get("/:username", async (req, res) => {
+	if (!req.session.username || req.session.username !== req.params.username) {
+		res.redirect("/login");
+	} else {
+		try {
+			const user = await User.findOne({ username: req.session.username });
+			ejs.renderFile(
+				path.join(__dirname, "profile.ejs"),
+				{ user },
+				(err, html) => {
+					if (err) {
+						console.log(err);
+						res.status(500).send("Error rendering template");
+					} else {
+						res.send(html);
+					}
+				}
+			);
+		} catch (error) {
+			console.log(error);
+			res.status(500).send("Error retrieving data");
+		}
+	}
+});
+
 app.get("/logout", (req, res) => {
 	req.session.destroy();
 	res.redirect("/login");
