@@ -56,16 +56,32 @@ app.get("/", async (req, res) => {
 
 app.post("/", async (req, res) => {
 	const { message } = req.body;
-	const name = req.session.username;
-	try {
-		const person = new Person({ name, message });
-		await person.save();
-		res.redirect("/");
-	} catch (error) {
-		console.log(error);
-		res.status(500).send(
-			"<h1>Error: 500</h1><p>Error adding message. You need to be connected to the internet and <span><a href='/login'>logged in</a></span></p>"
-		);
+	if (req.session.username) {
+		const name = req.session.username;
+		console.log("Username in /: " + name);
+		try {
+			const person = new Person({ name, message });
+			await person.save();
+			res.redirect("/");
+		} catch (error) {
+			console.log(error);
+			res.status(500).send(
+				"<h1>Error: 500</h1><p>Error adding message. You need to be connected to the internet and <span><a href='/login'>logged in</a></span></p>"
+			);
+		}
+	} else {
+		const name = "Unknown";
+		console.log("Username in /: " + name);
+		try {
+			const person = new Person({ name, message });
+			await person.save();
+			res.redirect("/");
+		} catch (error) {
+			console.log(error);
+			res.status(500).send(
+				"<h1>Error: 500</h1><p>Error adding message. You need to be connected to the internet and <span><a href='/login'>logged in</a></span></p>"
+			);
+		}
 	}
 });
 
@@ -102,7 +118,7 @@ app.post("/login", async (req, res) => {
 		req.session.profilePicUrl = user.profilePicUrl;
 		if (user && user.password === password) {
 			req.session.username = user.username;
-			console.log("username: " + req.session.username);
+			console.log("username in /login: " + req.session.username);
 			res.redirect("/");
 		} else {
 			res.status(401).send(
