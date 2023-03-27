@@ -32,8 +32,6 @@ app.use(
 );
 
 app.get("/", async (req, res) => {
-	const name = req.session.username;
-	console.log("Username in /: " + name);
 	if (!req.session.username) {
 		res.redirect("/login");
 	} else {
