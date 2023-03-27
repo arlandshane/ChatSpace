@@ -32,6 +32,8 @@ app.use(
 );
 
 app.get("/", async (req, res) => {
+	const name = req.session.username;
+	console.log("Username in /: " + name);
 	if (!req.session.username) {
 		res.redirect("/login");
 	} else {
@@ -103,9 +105,9 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-	const { message } = req.body;
 	const name = req.session.username;
-	console.log("Username in /: " + name);
+	const { message } = req.body;
+
 	try {
 		if (!name) {
 			res.redirect("/login");
