@@ -90,3 +90,36 @@ h1 {
 .react-count {
 	font-size: 0.8rem;
 }
+
+.upload-container {
+	user-select: none;
+	display: flex;
+}
+
+.profile-pictures {
+	border-radius: 100%;
+	width: 5rem;
+	height: 5rem;
+	text-align: center;
+	align-self: center;
+}
+
+.doodle {
+	cursor: pointer;
+	transition-duration: 200ms;
+	border-radius: inherit;
+}
+
+.doodle:hover {
+	background-color: plum;
+}
+
+.selected {
+	display: none;
+	position: absolute;
+	border-radius: 100%;
+	width: 2rem;
+	height: 2rem;
+	background-color: white;
+	border: 1px solid gray;
+}

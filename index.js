@@ -21,7 +21,7 @@ const connectDB = async () => {
 	}
 };
 
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(
 	session({
@@ -67,11 +67,12 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-	const { email, username, password } = req.body;
+	const { username, profilePicUrl, email, password } = req.body;
 	try {
-		const user = new User({ email, username, password });
+		const user = new User({ username, profilePicUrl, email, password });
 		await user.save();
 		req.session.username = user.username;
+		console.log(user.profilePicUrl);
 		res.redirect("/");
 	} catch (error) {
 		console.log(error);

@@ -8,6 +8,7 @@
 	</head>
 	<body>
 		<h1>Register</h1>
+		<hr />
 		<form action="/register" method="post">
 			<label for="username">Username:</label>
 			<input
@@ -15,8 +16,61 @@
 				type="text"
 				name="username"
 				id="username"
+				placeholder="Username"
 				required
 			/>
+			<hr />
+
+			<div class="upload-container">
+				<label style="align-self: center" for="profilePic">
+					Profile Picture:
+				</label>
+				<div class="profile-pictures input-box">
+					<div class="selected">✔️</div>
+					<img
+						class="doodle"
+						style="width: inherit"
+						src="https://doodleipsum.com/200x200/avatar-5?i=68988796ecff7ce49d335d7e1f04e8ea"
+					/>
+				</div>
+				<div class="profile-pictures input-box">
+					<div class="selected">✔️</div>
+					<img
+						class="doodle"
+						style="width: inherit"
+						src="https://doodleipsum.com/200x200/avatar-5?i=279aba33eb51572d3fd8ef281a6297c4"
+						alt=""
+					/>
+				</div>
+				<div class="profile-pictures input-box">
+					<div class="selected">✔️</div>
+					<img
+						class="doodle"
+						style="width: inherit"
+						src="https://doodleipsum.com/200x200/avatar-5?i=1835a3c3c9086809a61e6f0ce5cc508f"
+						alt=""
+					/>
+				</div>
+				<div class="profile-pictures input-box">
+					<div class="selected">✔️</div>
+					<img
+						class="doodle"
+						style="width: inherit"
+						src="https://doodleipsum.com/200x200/avatar-5?i=250ca9e94cc941f405a5ecd1f604a1f1"
+						alt=""
+					/>
+				</div>
+				<div class="profile-pictures input-box">
+					<div class="selected">✔️</div>
+					<img
+						class="doodle"
+						style="width: inherit"
+						src="https://doodleipsum.com/200x200/avatar-5?i=3f53e38ed4b3e47f1b18a17e776cad04"
+						alt=""
+					/>
+				</div>
+			</div>
+			<input type="hidden" name="profilePicUrl" id="profilePicUrl" />
 			<hr />
 			<label for="email">Email:</label>
 			<input
@@ -24,6 +78,7 @@
 				type="email"
 				name="email"
 				id="email"
+				placeholder="Email"
 				required
 			/>
 			<hr />
@@ -33,31 +88,31 @@
 				type="text"
 				name="password"
 				id="password"
+				placeholder="Password"
 				required
+			/>
+			<input
+				type="file"
+				id="profilePic"
+				name="profilePic"
+				style="display: none"
 			/>
 			<button class="btn" value="submit">Register</button>
 		</form>
 		<a href="/login"><button class="btn">Login</button></a>
 		<script>
-			const passwordInput = document.getElementById("password");
-			const loginButton = document.querySelector("button[type='submit']");
-
-			passwordInput.addEventListener("input", function () {
-				const password = passwordInput.value;
-				const strengthLabel =
-					document.getElementById("password-strength");
-				let strength = "";
-				if (password.length < 8) {
-					strength = "Weak";
-					loginButton.disabled = true;
-				} else if (password.length < 12) {
-					strength = "Moderate";
-					loginButton.disabled = false;
-				} else {
-					strength = "Strong";
-					loginButton.disabled = false;
-				}
-				strengthLabel.innerHTML = strength;
+			const profilePics = document.querySelectorAll(".profile-pictures");
+			const profilePicUrlInput = document.getElementById("profilePicUrl");
+			profilePics.forEach((profilePic) => {
+				profilePic.addEventListener("click", () => {
+					const selected = profilePic.querySelector(".selected");
+					profilePics.forEach((pic) => {
+						pic.querySelector(".selected").style.display = "none";
+					});
+					selected.style.display = "inline";
+					const profilePicUrl = profilePic.querySelector("img").src;
+					profilePicUrlInput.value = profilePicUrl;
+				});
 			});
 		</script>
 	</body>
