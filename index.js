@@ -116,9 +116,9 @@ app.post("/login", async (req, res) => {
 			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
 		});
 		req.session.profilePicUrl = user.profilePicUrl;
+		req.session.username = user.username;
 		if (user && user.password === password) {
-			req.session.username = user.username;
-			console.log("username in /login: " + req.session.username);
+			console.log("Username in /login: " + req.session.username);
 			res.redirect("/");
 		} else {
 			res.status(401).send(
