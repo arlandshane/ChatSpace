@@ -127,7 +127,7 @@ app.get("/:username", async (req, res) => {
 		res.redirect("/login");
 	} else {
 		try {
-			const user = await User.findOne({ username: req.session.username });
+			const user = await User.findOne({ username: req.params.username });
 			ejs.renderFile(
 				path.join(__dirname, "profile.ejs"),
 				{ user },
