@@ -132,13 +132,23 @@ app.post("/", async (req, res) => {
 	}
 });
 
+app.get("/logout", function (req, res) {
+	req.session.destroy((err) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.redirect("/login");
+		}
+	});
+});
+
 app.get("/:username", async (req, res) => {
 	if (!req.session.username) {
 		res.redirect("/login");
 	} else {
 		try {
-			const user = await User.findOne({ username: req.params.username });
-			console.log("req.params.username: " + req.params.username);
+			const user = await User.findOne({ username: req.session.username });
+			console.log("req.session.username: " + req.session.username);
 			ejs.renderFile(
 				path.join(__dirname, "profile.ejs"),
 				{ user },
@@ -156,11 +166,6 @@ app.get("/:username", async (req, res) => {
 			res.status(500).send("Error retrieving data");
 		}
 	}
-});
-
-app.get("/logout", (req, res) => {
-	req.session.destroy();
-	res.redirect("/login");
 });
 
 connectDB().then(() => {
