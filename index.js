@@ -32,25 +32,29 @@ app.use(
 );
 
 app.get("/", async (req, res) => {
-	try {
-		const persons = await Person.find();
-		const currentUser = req.session.username;
-		const dp = req.session.profilePicUrl;
-		ejs.renderFile(
-			path.join(__dirname, "index.ejs"),
-			{ persons, currentUser, dp },
-			(err, html) => {
-				if (err) {
-					console.log(err);
-					res.status(500).send("Error rendering template");
-				} else {
-					res.send(html);
+	if (!req.session.username) {
+		res.redirect("/login");
+	} else {
+		try {
+			const persons = await Person.find();
+			const currentUser = req.session.username;
+			const dp = req.session.profilePicUrl;
+			ejs.renderFile(
+				path.join(__dirname, "index.ejs"),
+				{ persons, currentUser, dp },
+				(err, html) => {
+					if (err) {
+						console.log(err);
+						res.status(500).send("Error rendering template");
+					} else {
+						res.send(html);
+					}
 				}
-			}
-		);
-	} catch (error) {
-		console.log(error);
-		res.status(500).send("Error retrieving data");
+			);
+		} catch (error) {
+			console.log(error);
+			res.status(500).send("Error retrieving data");
+		}
 	}
 });
 
@@ -82,7 +86,7 @@ app.post("/login", async (req, res) => {
 		const user = await User.findOne({
 			$or: [{ email: emailOrUsername }, { username: emailOrUsername }],
 		});
-		req.session.profilePicUrl = await user.profilePicUrl;
+		req.session.profilePicUrl = user.profilePicUrl;
 		if (user && user.password === password) {
 			req.session.username = user.username;
 			console.log("username in /login: " + req.session.username);
@@ -103,9 +107,13 @@ app.post("/", async (req, res) => {
 	const name = req.session.username;
 	console.log("Username in /: " + name);
 	try {
-		const person = new Person({ name, message });
-		await person.save();
-		res.redirect("/");
+		if (!name) {
+			res.redirect("/login");
+		} else {
+			const person = new Person({ name, message });
+			await person.save();
+			res.redirect("/");
+		}
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(
