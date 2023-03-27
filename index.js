@@ -21,7 +21,7 @@ const connectDB = async () => {
 	}
 };
 
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(
 	session({
@@ -57,7 +57,6 @@ app.get("/", async (req, res) => {
 app.post("/", async (req, res) => {
 	const { message } = req.body;
 	const name = req.session.username;
-	console.log("Username: " + name);
 	try {
 		const person = new Person({ name, message });
 		await person.save();
@@ -103,6 +102,7 @@ app.post("/login", async (req, res) => {
 		req.session.profilePicUrl = user.profilePicUrl;
 		if (user && user.password === password) {
 			req.session.username = user.username;
+			console.log("username: " + req.session.username);
 			res.redirect("/");
 		} else {
 			res.status(401).send(
