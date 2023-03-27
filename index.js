@@ -57,6 +57,7 @@ app.get("/", async (req, res) => {
 app.post("/", async (req, res) => {
 	const { message } = req.body;
 	const name = req.session.username;
+	console.log("Username: " + name);
 	try {
 		const person = new Person({ name, message });
 		await person.save();
