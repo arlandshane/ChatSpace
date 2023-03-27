@@ -123,7 +123,7 @@ app.post("/", async (req, res) => {
 });
 
 app.get("/:username", async (req, res) => {
-	if (!req.session.username || req.session.username !== req.params.username) {
+	if (!req.session.username) {
 		res.redirect("/login");
 	} else {
 		try {
