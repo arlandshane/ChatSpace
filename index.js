@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -21,15 +22,21 @@ const connectDB = async () => {
 	}
 };
 
+const store = new MongoDBStore({
+	uri: process.env.MONGO_URI,
+	collection: "sessions",
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(
 	session({
 		secret: "shane_arland_secret_session_key",
 		resave: false,
-		saveUninitialized: false,
+		saveUninitialized: true,
+		store: store,
 		cookie: {
-			maxAge: 3600000,
+			maxAge: 1000 * 60 * 60 * 24 * 7,
 		},
 	})
 );
