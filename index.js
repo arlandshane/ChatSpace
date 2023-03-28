@@ -80,15 +80,22 @@ app.get("/login", (req, res) => {
 
 app.post("/register", async (req, res) => {
 	const { username, profilePicUrl, email, password } = req.body;
-	try {
-		const user = new User({ username, profilePicUrl, email, password });
-		await user.save();
-		res.redirect("/login");
-	} catch (error) {
-		console.log(error);
-		res.status(500).send(
-			"<h1>Error: 500</h1><p>Error registering user.<br>You could already be registered, try <a href='/login'>login</a></p>"
+	const isLowerCase = /^[a-z_]+$/.test(username);
+	if (!isLowerCase) {
+		res.send(
+			"<h1>Error</h1><p>The username must only consist of lowercase letters and may include underscores.<a href='/register'>Back to registration</a></p>"
 		);
+	} else {
+		try {
+			const user = new User({ username, profilePicUrl, email, password });
+			await user.save();
+			res.redirect("/login");
+		} catch (error) {
+			console.log(error);
+			res.status(500).send(
+				"<h1>Error: 500</h1><p>Error registering user.<br>You could already be registered, try <a href='/login'>login</a></p>"
+			);
+		}
 	}
 });
 
@@ -147,6 +154,8 @@ app.get("/logout", (req, res) => {
 app.get("/:username", async (req, res) => {
 	if (!req.session.username) {
 		res.redirect("/login");
+	} else if (req.params.username !== req.session.username) {
+		res.send("You are not allowed to view this person's profile");
 	} else {
 		try {
 			const user = await User.findOne({ username: req.session.username });
