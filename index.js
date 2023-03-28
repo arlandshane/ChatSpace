@@ -8,6 +8,7 @@ const path = require("path");
 const ejs = require("ejs");
 const Person = require("./models/person");
 const User = require("./models/user");
+const user = require("./models/user");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -102,13 +103,13 @@ app.post("/login", async (req, res) => {
 			console.log("username in /login: " + req.session.username);
 			res.redirect("/");
 		} else {
-			res.status(401).send(
-				"<h1>Error: 401</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>"
-			);
+			res.status(401).send("<h1>Error: 500</h1><p>Error logging in</p>");
 		}
 	} catch (error) {
 		console.log(error);
-		res.status(500).send("<h1>Error: 500</h1><p>Error logging in</p>");
+		res.status(500).send(
+			"<h1>Error: 401</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>"
+		);
 	}
 });
 
@@ -132,7 +133,7 @@ app.post("/", async (req, res) => {
 	}
 });
 
-app.get("/logout", function (req, res) {
+app.get("/logout", (req, res) => {
 	req.session.destroy((err) => {
 		if (err) {
 			console.log(err);
@@ -165,6 +166,37 @@ app.get("/:username", async (req, res) => {
 			console.log(error);
 			res.status(500).send("Error retrieving data");
 		}
+	}
+});
+
+app.post("/delete", async (req, res) => {
+	try {
+		const user = await User.findOneAndDelete({
+			username: req.session.username,
+		});
+		console.log(
+			"This user has flagged for delettion: " +
+				req.session.username +
+				" " +
+				user
+		);
+		if (!user) {
+			return res.status(404).send("User not found");
+		}
+		await user.deleteOne({ username: req.session.username });
+		req.session.destroy((err) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log("User session destroyed successfully");
+				res.redirect("/register");
+			}
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).send(
+			"<h1>Error: 500</h1><p>Error deleting profile</p>"
+		);
 	}
 });
 

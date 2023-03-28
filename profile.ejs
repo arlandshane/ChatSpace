@@ -4,6 +4,7 @@
 		<title>Profile Page</title>
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
+
 	<body>
 		<nav style="padding: 0 1rem">
 			<h1>Profile Page</h1>
@@ -18,5 +19,99 @@
 		<p>Username: <%= user.username %></p>
 		<p>Email: <%= user.email %></p>
 		<p>Password: <%= user.password %></p>
+		<div>
+			<button style="width: 7rem" id="delete-btn" class="btn">
+				Delete Profile
+			</button>
+		</div>
+		<div
+			id="dialog-box"
+			style="display: none; margin: auto; justify-content: center"
+		>
+			<div
+				style="
+					border: 1px solid crimson;
+					background-color: white;
+					padding: 0.5rem;
+					border-radius: 1rem;
+				"
+			>
+				<p
+					style="
+						padding: 1rem;
+						margin: auto;
+						display: block;
+						background-color: white;
+						border: 1px solid crimson;
+						border-radius: 1rem;
+						text-align: center;
+					"
+				>
+					Are you sure?
+					<br /><span>This action is irreversable!</span>
+					<br />
+					Type:
+					<input
+						id="type-username"
+						style="padding: 0 0.5rem"
+						type="text"
+						class="input-box"
+						placeholder="<%= user.username %>"
+					/>
+				</p>
+
+				<div style="display: flex; justify-content: space-around">
+					<form
+						style="display: inline"
+						action="/delete"
+						method="post"
+					>
+						<button
+							disabled
+							id="confirm"
+							class="btn"
+							style="border: 1px solid crimson"
+						>
+							Confirm
+						</button>
+					</form>
+					<button
+						id="cancel"
+						class="btn"
+						style="border: 1px solid darkgreen"
+					>
+						Cancel
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const deleteBtn = document.getElementById("delete-btn");
+			const dialogBox = document.getElementById("dialog-box");
+			const confirm = document.getElementById("confirm");
+			const cancel = document.getElementById("cancel");
+			deleteBtn.addEventListener("click", () => {
+				// console.log("delete button clicked");
+				dialogBox.style.display = "flex";
+				if (dialogBox.style.display === "flex") {
+					// console.log("diablog box is visible");
+					cancel.addEventListener("click", () => {
+						// console.log("cancel button clicked");
+						dialogBox.style.display = "none";
+					});
+
+					const typeDelete = document.getElementById("type-username");
+					const confirm = document.getElementById("confirm");
+					typeDelete.addEventListener("input", () => {
+						if (typeDelete.value === "<%= user.username %>") {
+							confirm.disabled = false;
+						} else {
+							confirm.disabled = true;
+						}
+					});
+				}
+			});
+		</script>
 	</body>
 </html>
