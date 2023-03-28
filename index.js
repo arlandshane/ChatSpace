@@ -48,11 +48,12 @@ app.get("/", async (req, res) => {
 	} else {
 		try {
 			const persons = await Person.find();
+			const users = await User.find();
 			const currentUser = req.session.username;
 			const dp = req.session.profilePicUrl;
 			ejs.renderFile(
 				path.join(__dirname, "index.ejs"),
-				{ persons, currentUser, dp },
+				{ persons, currentUser, dp, users },
 				(err, html) => {
 					if (err) {
 						console.log(err);
@@ -149,7 +150,6 @@ app.get("/:username", async (req, res) => {
 	} else {
 		try {
 			const user = await User.findOne({ username: req.session.username });
-			console.log("req.session.username: " + req.session.username);
 			ejs.renderFile(
 				path.join(__dirname, "profile.ejs"),
 				{ user },
@@ -175,7 +175,7 @@ app.post("/delete", async (req, res) => {
 			username: req.session.username,
 		});
 		console.log(
-			"This user has flagged for delettion: " +
+			"This user has flagged for deletion: " +
 				req.session.username +
 				" " +
 				user

@@ -3,18 +3,26 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Chatting Space</title>
+		<title>Chat Space</title>
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 
 	<body>
 		<nav style="display: flex; padding: 0 1rem">
-			<h1>Chatting Space</h1>
-			<a href="/<%= currentUser %>">
-				<img class="avatar" src="<%= dp %>" alt="dp" />
-			</a>
+			<h1>Chat Space</h1>
 			<div>
-				<% if (currentUser) { %> <%= currentUser %>
+				<a
+					style="
+						display: inline-flex;
+						text-decoration: none;
+						gap: 0.5rem;
+					"
+					href="/<%= currentUser %>"
+				>
+					<p><%= currentUser %></p>
+					<img class="avatar" src="<%= dp %>" alt="dp" />
+				</a>
+				<% if (currentUser) { %>
 				<a href="/logout"><button class="btn">Logout</button></a>
 				<% } else { %>
 				<a href="/login"><button class="btn">Login</button></a>
@@ -37,8 +45,30 @@
 				Add
 			</button>
 		</form>
+		<div
+			style="
+				gap: 1rem;
+				display: flex;
+				justify-content: space-around;
+				width: fit-content;
+			"
+		>
+			<h2 style="display: inline; align-self: center">Users:</h2>
+			<% users.forEach((user) => { %>
+			<div>
+				<img
+					style="width: 5rem; border: 1px solid; border-radius: 100%"
+					src="<%= user.profilePicUrl %>"
+					alt=""
+				/>
+				<div style="text-align: center"><%= user.username %></div>
+			</div>
+
+			<% }) %>
+		</div>
+
 		<h2>Messages:</h2>
-		<% persons.slice().reverse().forEach(function(person) { %>
+		<% persons.slice().reverse().forEach((person) => { %>
 		<div style="display: flex">
 			<p
 				style="
