@@ -142,6 +142,13 @@ h1 {
 
 .avatar:hover,
 .avatar:focus {
-	outline: none;
 	box-shadow: 0 0 0 0.17rem rgba(220, 20, 60, 0.5);
+}
+
+.profiles {
+	width: 5rem;
+	transition-duration: 200ms;
+	background-color: white;
+	border-radius: 100%;
+	box-shadow: 0 0 0 2px rgba(220, 20, 60, 0.5);
 }

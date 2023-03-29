@@ -151,7 +151,7 @@ app.get("/logout", (req, res) => {
 	});
 });
 
-app.get("/:username", async (req, res) => {
+app.get("/user/:username", async (req, res) => {
 	if (!req.session.username) {
 		res.redirect("/login");
 	} else if (req.params.username !== req.session.username) {

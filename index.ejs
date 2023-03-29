@@ -15,9 +15,10 @@
 					style="
 						display: inline-flex;
 						text-decoration: none;
+						color: black;
 						gap: 0.5rem;
 					"
-					href="/<%= currentUser %>"
+					href="/user/<%= currentUser %>"
 				>
 					<p><%= currentUser %></p>
 					<img class="avatar" src="<%= dp %>" alt="dp" />
@@ -49,24 +50,31 @@
 			style="
 				gap: 1rem;
 				display: flex;
+				flex-wrap: wrap;
 				justify-content: space-around;
 				width: fit-content;
 			"
 		>
 			<h2 style="display: inline; align-self: center">Users:</h2>
 			<% users.forEach((user) => { %>
-			<div>
-				<img
-					style="width: 5rem; border: 1px solid; border-radius: 100%"
-					src="<%= user.profilePicUrl %>"
-					alt=""
-				/>
-				<div style="text-align: center"><%= user.username %></div>
+			<div style="text-align: center">
+				<div
+					style="
+						font-size: smaller;
+						text-decoration: none;
+						color: black;
+					"
+				>
+					<img
+						class="profiles"
+						src="<%= user.profilePicUrl %>"
+						alt=""
+					/>
+				</div>
+				<div><%= user.username %></div>
 			</div>
-
 			<% }) %>
 		</div>
-
 		<h2>Messages:</h2>
 		<% persons.slice().reverse().forEach((person) => { %>
 		<div style="display: flex">
