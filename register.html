@@ -7,99 +7,144 @@
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 	<body>
-		<h1>Register</h1>
+		<nav style="padding: 0 1rem">
+			<h1>Sign Up</h1>
+		</nav>
 		<hr />
-		<form action="/register" method="post">
-			<label for="username">Username:</label>
-			<input
-				class="input-box"
-				type="text"
-				name="username"
-				id="username"
-				placeholder="Username"
-				required
-			/>
-			<hr />
+		<section>
+			<form
+				style="
+					margin: auto;
+					padding: 1rem;
+					background-color: lavender;
+					width: fit-content;
+					max-width: 30rem;
+					border-radius: 1rem;
+				"
+				action="/register"
+				method="post"
+			>
+				<div class="upload-container">
+					<label style="align-self: center" for="profilePic">
+						Profile Picture:
+					</label>
+					<div style="display: flex; flex-wrap: wrap">
+						<div class="profile-pictures input-box">
+							<div class="selected">✔️</div>
+							<img
+								class="doodle"
+								style="width: inherit"
+								src="https://doodleipsum.com/200x200/avatar-5?i=68988796ecff7ce49d335d7e1f04e8ea"
+							/>
+						</div>
+						<div class="profile-pictures input-box">
+							<div class="selected">✔️</div>
+							<img
+								class="doodle"
+								style="width: inherit"
+								src="https://doodleipsum.com/200x200/avatar-5?i=279aba33eb51572d3fd8ef281a6297c4"
+								alt=""
+							/>
+						</div>
+						<div class="profile-pictures input-box">
+							<div class="selected">✔️</div>
+							<img
+								class="doodle"
+								style="width: inherit"
+								src="https://doodleipsum.com/200x200/avatar-5?i=1835a3c3c9086809a61e6f0ce5cc508f"
+								alt=""
+							/>
+						</div>
+						<div class="profile-pictures input-box">
+							<div class="selected">✔️</div>
+							<img
+								class="doodle"
+								style="width: inherit"
+								src="https://doodleipsum.com/200x200/avatar-5?i=250ca9e94cc941f405a5ecd1f604a1f1"
+								alt=""
+							/>
+						</div>
+						<div class="profile-pictures input-box">
+							<div class="selected">✔️</div>
+							<img
+								class="doodle"
+								style="width: inherit"
+								src="https://doodleipsum.com/200x200/avatar-5?i=3f53e38ed4b3e47f1b18a17e776cad04"
+								alt=""
+							/>
+						</div>
+						<div class="profile-pictures input-box">
+							<div class="selected">✔️</div>
+							<img
+								class="doodle"
+								style="width: inherit"
+								src="https://doodleipsum.com/200x200/avatar-5?i=dc167f443cf59f78c586a30fbd0bdaca"
+								alt=""
+							/>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" name="profilePicUrl" id="profilePicUrl" />
+				<hr />
+				<div style="display: flex; flex-direction: column">
+					<div style="display: flex; justify-content: space-around">
+						<label style="align-self: center" for="username"
+							>Username:</label
+						>
+						<input
+							class="input-box"
+							type="text"
+							name="username"
+							id="username"
+							placeholder="Username"
+							required
+						/>
+					</div>
+					<span style="white-space: nowrap; text-align: center"
+						>(lowercase and underscore only)</span
+					>
+					<div>
+						<div
+							style="display: flex; justify-content: space-around"
+						>
+							<label style="align-self: center" for="email">
+								Email:
+							</label>
+							<input
+								class="input-box"
+								type="email"
+								name="email"
+								id="email"
+								placeholder="Email"
+								required
+							/>
+						</div>
+						<div
+							style="display: flex; justify-content: space-around"
+						>
+							<label style="align-self: center" for="password">
+								Password:
+							</label>
+							<input
+								class="input-box"
+								type="text"
+								name="password"
+								id="password"
+								placeholder="Password"
+								required
+							/>
+						</div>
+					</div>
+				</div>
+				<div style="display: flex; justify-content: space-around">
+					<button class="btn" value="submit">Sign Up</button>
+					<a href="/login">
+						<button type="button" class="btn">Login</button>
+					</a>
+				</div>
+			</form>
+		</section>
 
-			<div class="upload-container">
-				<label style="align-self: center" for="profilePic">
-					Profile Picture:
-				</label>
-				<div class="profile-pictures input-box">
-					<div class="selected">✔️</div>
-					<img
-						class="doodle"
-						style="width: inherit"
-						src="https://doodleipsum.com/200x200/avatar-5?i=68988796ecff7ce49d335d7e1f04e8ea"
-					/>
-				</div>
-				<div class="profile-pictures input-box">
-					<div class="selected">✔️</div>
-					<img
-						class="doodle"
-						style="width: inherit"
-						src="https://doodleipsum.com/200x200/avatar-5?i=279aba33eb51572d3fd8ef281a6297c4"
-						alt=""
-					/>
-				</div>
-				<div class="profile-pictures input-box">
-					<div class="selected">✔️</div>
-					<img
-						class="doodle"
-						style="width: inherit"
-						src="https://doodleipsum.com/200x200/avatar-5?i=1835a3c3c9086809a61e6f0ce5cc508f"
-						alt=""
-					/>
-				</div>
-				<div class="profile-pictures input-box">
-					<div class="selected">✔️</div>
-					<img
-						class="doodle"
-						style="width: inherit"
-						src="https://doodleipsum.com/200x200/avatar-5?i=250ca9e94cc941f405a5ecd1f604a1f1"
-						alt=""
-					/>
-				</div>
-				<div class="profile-pictures input-box">
-					<div class="selected">✔️</div>
-					<img
-						class="doodle"
-						style="width: inherit"
-						src="https://doodleipsum.com/200x200/avatar-5?i=3f53e38ed4b3e47f1b18a17e776cad04"
-						alt=""
-					/>
-				</div>
-			</div>
-			<input type="hidden" name="profilePicUrl" id="profilePicUrl" />
-			<hr />
-			<label for="email">Email:</label>
-			<input
-				class="input-box"
-				type="email"
-				name="email"
-				id="email"
-				placeholder="Email"
-				required
-			/>
-			<hr />
-			<label for="password">Password:</label>
-			<input
-				class="input-box"
-				type="text"
-				name="password"
-				id="password"
-				placeholder="Password"
-				required
-			/>
-			<input
-				type="file"
-				id="profilePic"
-				name="profilePic"
-				style="display: none"
-			/>
-			<button class="btn" value="submit">Register</button>
-		</form>
-		<a href="/login"><button class="btn">Login</button></a>
 		<script>
 			const profilePics = document.querySelectorAll(".profile-pictures");
 			const profilePicUrlInput = document.getElementById("profilePicUrl");

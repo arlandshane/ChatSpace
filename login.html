@@ -7,28 +7,63 @@
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 	<body>
-		<h1>Login</h1>
+		<nav style="padding: 0 1rem">
+			<h1>Login</h1>
+		</nav>
 		<hr />
-		<form action="/login" method="POST">
-			<label for="emailOrUsername">Email/Username:</label>
-			<input
-				class="input-box"
-				type="text"
-				id="emailOrUsername"
-				name="emailOrUsername"
-				required
-			/>
-			<hr />
-			<label for="password">Password:</label>
-			<input
-				class="input-box"
-				type="text"
-				id="password"
-				name="password"
-				required
-			/>
-			<button class="btn" type="submit">Login</button>
-		</form>
-		<a href="/register"><button class="btn">Register</button></a>
+		<section>
+			<form
+				style="
+					margin: auto;
+					padding: 1rem;
+					background-color: lavender;
+					border-radius: 1rem;
+					display: flex;
+					flex-direction: column;
+					width: fit-content;
+				"
+				action="/login"
+				method="POST"
+			>
+				<div>
+					<label for="emailOrUsername">Email/Username:</label>
+					<input
+						class="input-box"
+						type="text"
+						id="emailOrUsername"
+						name="emailOrUsername"
+						required
+					/>
+				</div>
+				<div
+					style="
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+					"
+				>
+					<label for="password">Password:</label>
+					<input
+						class="input-box"
+						type="text"
+						id="password"
+						name="password"
+						required
+					/>
+				</div>
+				<div
+					style="
+						width: 100%;
+						display: flex;
+						justify-content: space-around;
+					"
+				>
+					<button class="btn" type="submit">Login</button>
+					<a href="/register">
+						<button type="button" class="btn">Register</button>
+					</a>
+				</div>
+			</form>
+		</section>
 	</body>
 </html>

@@ -46,7 +46,7 @@ h1 {
 	background-color: white;
 	border: 1px solid gray;
 	margin: 0.5rem;
-	width: 10rem;
+	width: 12rem;
 }
 
 .btn {
@@ -94,6 +94,7 @@ h1 {
 .upload-container {
 	user-select: none;
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .profile-pictures {
@@ -101,7 +102,6 @@ h1 {
 	width: 5rem;
 	height: 5rem;
 	text-align: center;
-	align-self: center;
 }
 
 .doodle {

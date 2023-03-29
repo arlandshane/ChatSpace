@@ -93,7 +93,7 @@ app.post("/register", async (req, res) => {
 		} catch (error) {
 			console.log(error);
 			res.status(500).send(
-				"<h1>Error: 500</h1><p>Error registering user.<br>You could already be registered, try <a href='/login'>login</a></p>"
+				"<h1>Error: 500</h1><p>Error registering user.<br> Username could be taken. Username should be lowercase and unique. <br>You could already be registered, try <a href='/login'>login</a></p>"
 			);
 		}
 	}
@@ -111,12 +111,12 @@ app.post("/login", async (req, res) => {
 			console.log("username in /login: " + req.session.username);
 			res.redirect("/");
 		} else {
-			res.status(401).send("<h1>Error: 500</h1><p>Error logging in</p>");
+			res.status(401).send("<h1>Error: 401</h1><p>Error logging in</p>");
 		}
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(
-			"<h1>Error: 401</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>"
+			"<h1>Error: 500</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>"
 		);
 	}
 });
