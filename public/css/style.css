@@ -107,6 +107,7 @@ h1 {
 .doodle {
 	cursor: pointer;
 	transition-duration: 200ms;
+	width: inherit;
 	border-radius: inherit;
 }
 
@@ -151,4 +152,19 @@ h1 {
 	background-color: white;
 	border-radius: 100%;
 	box-shadow: 0 0 0 2px rgba(220, 20, 60, 0.5);
+}
+
+.get-user-info {
+	display: flex;
+	justify-content: space-between;
+	padding: 0 1rem;
+}
+
+.signUp-form {
+	margin: auto;
+	padding: 1rem;
+	background-color: lavender;
+	width: fit-content;
+	max-width: 30rem;
+	border-radius: 1rem;
 }

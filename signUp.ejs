@@ -9,31 +9,38 @@
 	<body>
 		<nav style="padding: 0 1rem">
 			<h1>Sign Up</h1>
+			<a href="/login">
+				<button type="button" class="btn">Login</button>
+			</a>
 		</nav>
 		<hr />
 		<section>
-			<form
-				style="
-					margin: auto;
-					padding: 1rem;
-					background-color: lavender;
-					width: fit-content;
-					max-width: 30rem;
-					border-radius: 1rem;
-				"
-				action="/register"
-				method="post"
-			>
+			<form class="signUp-form" action="/signUp" method="post">
 				<div class="upload-container">
-					<label style="align-self: center" for="profilePic">
+					<label
+						style="align-self: center; font-weight: bold"
+						for="profilePic"
+					>
 						Profile Picture:
 					</label>
-					<div style="display: flex; flex-wrap: wrap">
+					<div
+						style="
+							display: flex;
+							flex-wrap: wrap;
+							justify-content: center;
+						"
+					>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
 							<img
 								class="doodle"
-								style="width: inherit"
+								src="https://doodleipsum.com/200x200/avatar-5?i=f1448c32c019be6f41ce9a7e0ca29c11"
+							/>
+						</div>
+						<div class="profile-pictures input-box">
+							<div class="selected">✔️</div>
+							<img
+								class="doodle"
 								src="https://doodleipsum.com/200x200/avatar-5?i=68988796ecff7ce49d335d7e1f04e8ea"
 							/>
 						</div>
@@ -41,7 +48,6 @@
 							<div class="selected">✔️</div>
 							<img
 								class="doodle"
-								style="width: inherit"
 								src="https://doodleipsum.com/200x200/avatar-5?i=279aba33eb51572d3fd8ef281a6297c4"
 								alt=""
 							/>
@@ -50,7 +56,14 @@
 							<div class="selected">✔️</div>
 							<img
 								class="doodle"
-								style="width: inherit"
+								src="https://doodleipsum.com/200x200/avatar-5?i=0d84ab4c01878c56920a1ffb5b23e3bf"
+								alt=""
+							/>
+						</div>
+						<div class="profile-pictures input-box">
+							<div class="selected">✔️</div>
+							<img
+								class="doodle"
 								src="https://doodleipsum.com/200x200/avatar-5?i=1835a3c3c9086809a61e6f0ce5cc508f"
 								alt=""
 							/>
@@ -59,7 +72,6 @@
 							<div class="selected">✔️</div>
 							<img
 								class="doodle"
-								style="width: inherit"
 								src="https://doodleipsum.com/200x200/avatar-5?i=250ca9e94cc941f405a5ecd1f604a1f1"
 								alt=""
 							/>
@@ -68,7 +80,6 @@
 							<div class="selected">✔️</div>
 							<img
 								class="doodle"
-								style="width: inherit"
 								src="https://doodleipsum.com/200x200/avatar-5?i=3f53e38ed4b3e47f1b18a17e776cad04"
 								alt=""
 							/>
@@ -77,7 +88,6 @@
 							<div class="selected">✔️</div>
 							<img
 								class="doodle"
-								style="width: inherit"
 								src="https://doodleipsum.com/200x200/avatar-5?i=dc167f443cf59f78c586a30fbd0bdaca"
 								alt=""
 							/>
@@ -87,7 +97,7 @@
 				<input type="hidden" name="profilePicUrl" id="profilePicUrl" />
 				<hr />
 				<div style="display: flex; flex-direction: column">
-					<div style="display: flex; justify-content: space-around">
+					<div class="get-user-info">
 						<label style="align-self: center" for="username"
 							>Username:</label
 						>
@@ -100,13 +110,8 @@
 							required
 						/>
 					</div>
-					<span style="white-space: nowrap; text-align: center"
-						>(lowercase and underscore only)</span
-					>
 					<div>
-						<div
-							style="display: flex; justify-content: space-around"
-						>
+						<div class="get-user-info">
 							<label style="align-self: center" for="email">
 								Email:
 							</label>
@@ -119,9 +124,7 @@
 								required
 							/>
 						</div>
-						<div
-							style="display: flex; justify-content: space-around"
-						>
+						<div class="get-user-info">
 							<label style="align-self: center" for="password">
 								Password:
 							</label>
@@ -136,13 +139,20 @@
 						</div>
 					</div>
 				</div>
-				<div style="display: flex; justify-content: space-around">
-					<button class="btn" value="submit">Sign Up</button>
-					<a href="/login">
-						<button type="button" class="btn">Login</button>
-					</a>
-				</div>
+				<button id="sign-up-btn" class="btn" value="submit">
+					Sign Up
+				</button>
 			</form>
+			<div
+				style="
+					white-space: nowrap;
+					text-align: center;
+					margin: auto;
+					font-style: italic;
+				"
+			>
+				*Username must be lowercase and underscore only
+			</div>
 		</section>
 
 		<script>
@@ -159,6 +169,10 @@
 					profilePicUrlInput.value = profilePicUrl;
 				});
 			});
+			if (!profilePicUrlInput.value) {
+				profilePicUrlInput.value =
+					"https://doodleipsum.com/200x200/avatar-4";
+			}
 		</script>
 	</body>
 </html>

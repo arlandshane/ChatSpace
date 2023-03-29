@@ -70,20 +70,32 @@ app.get("/", async (req, res) => {
 	}
 });
 
-app.get("/register", (req, res) => {
-	res.sendFile(__dirname + "/register.html");
+app.get("/signUp", async (req, res) => {
+	const userData = await User.find();
+	ejs.renderFile(
+		path.join(__dirname, "signUp.ejs"),	
+		{ userData },
+		(err, html) => {
+			if (err) {
+				console.log(err);
+				res.status(500).send("Internal Server Error");
+			} else {
+				res.send(html);
+			}
+		}
+	);
 });
 
 app.get("/login", (req, res) => {
 	res.sendFile(__dirname + "/login.html");
 });
 
-app.post("/register", async (req, res) => {
+app.post("/signUp", async (req, res) => {
 	const { username, profilePicUrl, email, password } = req.body;
 	const isLowerCase = /^[a-z_]+$/.test(username);
 	if (!isLowerCase) {
 		res.send(
-			"<h1>Error</h1><p>The username must only consist of lowercase letters and may include underscores.<a href='/register'>Back to registration</a></p>"
+			"<h1>Error</h1><p>The username must only consist of lowercase letters and may include underscores.<a href='/signUp'>Back to registration</a></p>"
 		);
 	} else {
 		try {
@@ -116,7 +128,7 @@ app.post("/login", async (req, res) => {
 	} catch (error) {
 		console.log(error);
 		res.status(500).send(
-			"<h1>Error: 500</h1><p>Invalid credentials. Try <a href='/register'>signing up</a></p>"
+			"<h1>Error: 500</h1><p>Invalid credentials. Try <a href='/signUp'>signing up</a></p>"
 		);
 	}
 });
@@ -198,7 +210,7 @@ app.post("/delete", async (req, res) => {
 				console.log(err);
 			} else {
 				console.log("User session destroyed successfully");
-				res.redirect("/register");
+				res.redirect("/signUp");
 			}
 		});
 	} catch (error) {
