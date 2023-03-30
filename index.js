@@ -8,7 +8,9 @@ const path = require("path");
 const ejs = require("ejs");
 const Person = require("./models/person");
 const User = require("./models/user");
-const user = require("./models/user");
+// const Space = require("./models/space");
+// const Room = require("./models/room");
+// const Chat = require("./models/chat");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -73,7 +75,7 @@ app.get("/", async (req, res) => {
 app.get("/signUp", async (req, res) => {
 	const userData = await User.find();
 	ejs.renderFile(
-		path.join(__dirname, "signUp.ejs"),	
+		path.join(__dirname, "signUp.ejs"),
 		{ userData },
 		(err, html) => {
 			if (err) {
@@ -120,6 +122,7 @@ app.post("/login", async (req, res) => {
 		req.session.profilePicUrl = user.profilePicUrl;
 		if (user && user.password === password) {
 			req.session.username = user.username;
+			req.session.userObjectId = user._id;
 			console.log("username in /login: " + req.session.username);
 			res.redirect("/");
 		} else {

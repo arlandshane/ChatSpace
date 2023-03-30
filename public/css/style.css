@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
 body {
-	background-color: lavenderblush;
+	background-color: ghostwhite;
 	font-family: "Montserrat", sans-serif;
 }
 
@@ -68,11 +68,12 @@ h1 {
 }
 
 .each-message {
-	display: inline-flex;
 	margin: 0.5rem;
 	padding: 0.3rem 0.5rem;
-	background-color: lavender;
-	border-radius: 0.2rem;
+	background-color: #ecf2ff;
+	border: 1px solid rgba(100, 150, 200, 0.5);
+	border-radius: 0.5rem;
+	width: fit-content;
 }
 
 .like-btn {
