@@ -88,10 +88,6 @@ app.get("/signUp", async (req, res) => {
 	);
 });
 
-app.get("/login", (req, res) => {
-	res.sendFile(__dirname + "/login.html");
-});
-
 app.post("/signUp", async (req, res) => {
 	const { username, profilePicUrl, email, password } = req.body;
 	const isLowerCase = /^[a-z_]+$/.test(username);
@@ -111,6 +107,10 @@ app.post("/signUp", async (req, res) => {
 			);
 		}
 	}
+});
+
+app.get("/login", (req, res) => {
+	res.sendFile(__dirname + "/login.html");
 });
 
 app.post("/login", async (req, res) => {
@@ -222,6 +222,14 @@ app.post("/delete", async (req, res) => {
 			"<h1>Error: 500</h1><p>Error deleting profile</p>"
 		);
 	}
+});
+
+app.get("/terms-of-service", (req, res) => {
+	res.sendFile(__dirname + "/termsOfUse.html");
+});
+
+app.get("/privacy-policy", (req, res) => {
+	res.sendFile(__dirname + "/privacyPolicy.html");
 });
 
 connectDB().then(() => {
