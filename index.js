@@ -122,7 +122,7 @@ app.post("/login", async (req, res) => {
 		req.session.profilePicUrl = user.profilePicUrl;
 		if (user && user.password === password) {
 			req.session.username = user.username;
-			req.session.userObjectId = user._id;
+			req.session.userId = user._id;
 			console.log("username in /login: " + req.session.username);
 			res.redirect("/");
 		} else {

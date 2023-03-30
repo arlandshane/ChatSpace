@@ -32,67 +32,47 @@
 					>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
-							<img
-								class="doodle"
-								src="https://doodleipsum.com/200x200/avatar-5?i=f1448c32c019be6f41ce9a7e0ca29c11"
-							/>
+							<img class="doodle" alt="" />
 						</div>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
-							<img
-								class="doodle"
-								src="https://doodleipsum.com/200x200/avatar-5?i=68988796ecff7ce49d335d7e1f04e8ea"
-							/>
+							<img class="doodle" alt="" />
 						</div>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
-							<img
-								class="doodle"
-								src="https://doodleipsum.com/200x200/avatar-5?i=279aba33eb51572d3fd8ef281a6297c4"
-								alt=""
-							/>
+							<img class="doodle" alt="" />
 						</div>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
-							<img
-								class="doodle"
-								src="https://doodleipsum.com/200x200/avatar-5?i=0d84ab4c01878c56920a1ffb5b23e3bf"
-								alt=""
-							/>
+							<img class="doodle" alt="" />
 						</div>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
-							<img
-								class="doodle"
-								src="https://doodleipsum.com/200x200/avatar-5?i=1835a3c3c9086809a61e6f0ce5cc508f"
-								alt=""
-							/>
+							<img class="doodle" alt="" />
 						</div>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
-							<img
-								class="doodle"
-								src="https://doodleipsum.com/200x200/avatar-5?i=250ca9e94cc941f405a5ecd1f604a1f1"
-								alt=""
-							/>
+							<img class="doodle" alt="" />
 						</div>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
-							<img
-								class="doodle"
-								src="https://doodleipsum.com/200x200/avatar-5?i=3f53e38ed4b3e47f1b18a17e776cad04"
-								alt=""
-							/>
+							<img class="doodle" alt="" />
 						</div>
 						<div class="profile-pictures input-box">
 							<div class="selected">✔️</div>
-							<img
-								class="doodle"
-								src="https://doodleipsum.com/200x200/avatar-5?i=dc167f443cf59f78c586a30fbd0bdaca"
-								alt=""
-							/>
+							<img class="doodle" alt="" />
 						</div>
 					</div>
+					<span
+						style="
+							white-space: nowrap;
+							margin: auto;
+							font-size: small;
+							font-style: italic;
+						"
+					>
+						*Refresh page to randomize avatars
+					</span>
 				</div>
 				<input type="hidden" name="profilePicUrl" id="profilePicUrl" />
 				<hr />
@@ -141,25 +121,56 @@
 						</div>
 					</div>
 				</div>
-				<button id="sign-up-btn" class="btn" value="submit">
-					Sign Up
-				</button>
+				<div style="text-align: center">
+					<button class="btn" value="submit">Sign Up</button>
+				</div>
 			</form>
 			<div
 				style="
 					white-space: nowrap;
 					text-align: center;
-					margin: auto;
+					font-size: small;
 					font-style: italic;
 				"
 			>
 				*Username must be lowercase and underscore only
+				<br />
+				*If not chosen, a default avatar will be assigned to you
 			</div>
 		</section>
 
 		<script>
+			const doodles = [
+				"https://doodleipsum.com/200x200/avatar?i=c2a46927c51b9a0707dcd491590fe419",
+				"https://doodleipsum.com/200x200/avatar?i=854652f6a35c1383f4d5fcf6e59bea81",
+				"https://doodleipsum.com/200x200/avatar?i=f46f5c42b613621a5cdf35e10f740152",
+
+				"https://doodleipsum.com/200x200/avatar-2?i=4eaa8e83ae7f03a591f0025589ae5cf8",
+				"https://doodleipsum.com/200x200/avatar-2?i=077be9b2a318567af33ea5f8802f357d",
+				"https://doodleipsum.com/200x200/avatar-2?i=6c54c7c35a2190dca17dac7ba729c061",
+
+				"https://doodleipsum.com/200x200/avatar-3?i=4ccf433e65467697da423130107f81bb",
+				"https://doodleipsum.com/200x200/avatar-3?i=8e20e722c8334a4d41f5aa5846d84b5c",
+				"https://doodleipsum.com/200x200/avatar-3?i=ff55f0ba0a7fd2846bb7e9300b806af8",
+
+				"https://doodleipsum.com/200x200/avatar-5?i=250ca9e94cc941f405a5ecd1f604a1f1",
+				"https://doodleipsum.com/200x200/avatar-5?i=0d84ab4c01878c56920a1ffb5b23e3bf",
+				"https://doodleipsum.com/200x200/avatar-5?i=68988796ecff7ce49d335d7e1f04e8ea",
+			];
 			const profilePics = document.querySelectorAll(".profile-pictures");
 			const profilePicUrlInput = document.getElementById("profilePicUrl");
+			const randomDoodles = document.querySelectorAll(".doodle");
+			const usedDoodles = new Set();
+			randomDoodles.forEach((randomDoodle) => {
+				let randomDoodleUrl;
+				do {
+					randomDoodleUrl =
+						doodles[Math.floor(Math.random() * doodles.length)];
+				} while (usedDoodles.has(randomDoodleUrl));
+				randomDoodle.src = randomDoodleUrl;
+				usedDoodles.add(randomDoodleUrl);
+			});
+
 			profilePics.forEach((profilePic) => {
 				profilePic.addEventListener("click", () => {
 					const selected = profilePic.querySelector(".selected");
@@ -173,7 +184,7 @@
 			});
 			if (!profilePicUrlInput.value) {
 				profilePicUrlInput.value =
-					"https://doodleipsum.com/200x200/avatar-4";
+					doodles[Math.floor(Math.random() * doodles.length)];
 			}
 		</script>
 	</body>
