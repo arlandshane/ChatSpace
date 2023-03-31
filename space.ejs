@@ -52,6 +52,56 @@
 		<form action="/spaces/<%= space._id %>/join" method="POST">
 			<button class="btn" type="submit">Join Space</button>
 		</form>
+		<% } else if(isParticipant) { %>
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const hide = document.querySelectorAll(".hide");
+				hide.forEach((hid) => {
+					hid.style.display = "block";
+				});
+			});
+		</script>
 		<% } %>
+
+		<div style="display: none" class="hide">
+			<form
+				style="display: flex"
+				action="/spaces/<%= space._id %>"
+				method="post"
+			>
+				<textarea
+					style="
+						width: 100%;
+						height: 5rem;
+						border-radius: 1rem;
+						padding: 0.5rem;
+						font-family: 'Montserrat', sans-serif;
+						line-height: 1rem;
+						outline: 2px solid #ccc;
+						border-radius: 1rem;
+						resize: none;
+						margin: 0.5rem;
+					"
+					maxlength="200"
+					type="text"
+					name="text"
+					id="text"
+					placeholder="Your message"
+					required
+				></textarea>
+				<button style="align-self: center" class="btn" type="submit">
+					Add
+				</button>
+			</form>
+		</div>
+		<div style="display: none" class="hide">
+			<h2>Messages:</h2>
+			<% space.messages.forEach((message) => { %>
+			<div>
+				<span><%= message.sender.username %></span> :
+				<span><%= message.text %></span>
+			</div>
+			<% }) %>
+		</div>
 	</body>
 </html>

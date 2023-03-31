@@ -16,6 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 mongoose.set("strictQuery", false);
+mongoose.set("strictPopulate", false);
 const connectDB = async () => {
 	try {
 		const conn = await mongoose.connect(process.env.MONGO_URI);
@@ -139,7 +140,6 @@ app.post("/login", async (req, res) => {
 app.post("/", async (req, res) => {
 	const name = req.session.username;
 	const { message } = req.body;
-
 	try {
 		if (!name) {
 			res.redirect("/login");
@@ -230,9 +230,14 @@ app.post("/spaces", async (req, res) => {
 
 app.get("/spaces/:spaceId", async (req, res) => {
 	try {
-		const space = await Space.findById(req.params.spaceId).populate(
-			"participants"
-		);
+		const space = await Space.findById(req.params.spaceId)
+			.populate({
+				path: "participants",
+			})
+			.populate({
+				path: "messages.sender",
+				select: "username",
+			});
 		if (!space) {
 			return res.status(404).json({ message: "Space not found" });
 		}
@@ -253,6 +258,26 @@ app.get("/spaces/:spaceId", async (req, res) => {
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({ message: "Internal server error" });
+	}
+});
+
+app.post("/spaces/:spaceId", async (req, res) => {
+	try {
+		const space = await Space.findById(req.params.spaceId);
+		if (!space) {
+			res.send("Space not found");
+		} else {
+			const message = {
+				text: req.body.text,
+				sender: req.session.userId,
+				timestamp: new Date(),
+			};
+			space.messages.push(message);
+			await space.save();
+			res.redirect(`/spaces/${space._id}`);
+		}
+	} catch (error) {
+		console.log(error);
 	}
 });
 
