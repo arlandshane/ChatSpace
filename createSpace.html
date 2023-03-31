@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Create Space</title>
+		<link rel="stylesheet" href="/css/style.css" />
+	</head>
+	<body>
+		<nav style="padding: 0 1rem">
+			<h1>Create Space</h1>
+			<a href="/"><button class="btn">Home</button></a>
+		</nav>
+		<hr />
+		<form action="/createSpace" method="post">
+			<label for="name">Space Name:</label>
+			<input
+				class="input-box"
+				type="text"
+				name="name"
+				placeholder="Space Name"
+			/>
+			<button class="btn" type="submit">Create</button>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Spaces</title>
+		<link rel="stylesheet" href="/css/style.css" />
+		<style>
+			a {
+				text-decoration: none;
+				color: black;
+			}
+		</style>
+	</head>
+	<body>
+		<nav style="padding: 0 1rem">
+			<h1>Spaces</h1>
+			<a href="/"><button class="btn">Home</button></a>
+		</nav>
+		<hr />
+		<div
+			style="
+				display: flex;
+				margin: 1rem 0;
+				gap: 0.7rem;
+				align-items: center;
+			"
+		>
+			<h4>Your Spaces:</h4>
+			<% if(spaces.length === 0) { %>
+			<p>None</p>
+			<% } %> <% spaces.forEach((space) => { %>
+			<a
+				href="/spaces/<%= space._id %>"
+				style="
+					background-color: #ecf2ff;
+					border-radius: 1rem;
+					padding: 1rem;
+					border: 1px solid rgba(100, 150, 200, 0.5);
+				"
+			>
+				<%= space.name %>
+			</a>
+			<% }) %>
+			<a href="/createSpace">
+				<button style="width: fit-content" class="btn">
+					Create Space
+				</button>
+			</a>
+		</div>
+		<div
+			style="
+				display: flex;
+				margin: 1rem 0;
+				gap: 0.7rem;
+				align-items: center;
+			"
+		>
+			<h4>Available Spaces:</h4>
+			<% availableSpaces.forEach((space) => { %>
+			<a
+				href="/spaces/<%= space._id %>"
+				style="
+					background-color: #ecf2ff;
+					border-radius: 1rem;
+					padding: 1rem;
+					border: 1px solid rgba(100, 150, 200, 0.5);
+				"
+			>
+				<%= space.name %>
+			</a>
+			<% }) %>
+		</div>
+	</body>
+</html>

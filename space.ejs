@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title><%= space.name %></title>
+		<link rel="stylesheet" href="/css/style.css" />
+	</head>
+	<body>
+		<nav style="padding: 0 1rem">
+			<h1><%= space.name %></h1>
+			<a href="/"><button class="btn">Home</button></a>
+		</nav>
+		<hr />
+		<h2>Participants:</h2>
+		<div
+			style="
+				display: flex;
+				justify-content: space-around;
+				flex-wrap: wrap;
+			"
+		>
+			<% let isParticipant = false; %> <%
+			space.participants.forEach((participant) => { %>
+			<div
+				style="
+					background-color: #ecf2ff;
+					border: 1px solid rgba(100, 150, 200, 0.5);
+					border-radius: 1rem;
+					padding: 1rem;
+				"
+			>
+				<%= participant.username %>
+				<img
+					class="avatar"
+					src="<%= participant.profilePicUrl %>"
+					alt=""
+				/>
+				<% if(participant._id.toString() === userId.toString()) {
+				isParticipant = true; } %>
+			</div>
+			<% }) %>
+		</div>
+		<% if(!isParticipant) { %>
+		<form action="/spaces/<%= space._id %>/join" method="POST">
+			<button style="width: fit-content" class="btn" type="submit">
+				Join Space
+			</button>
+		</form>
+		<% } %>
+	</body>
+</html>
