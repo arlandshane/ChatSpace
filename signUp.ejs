@@ -186,6 +186,16 @@
 				profilePicUrlInput.value =
 					doodles[Math.floor(Math.random() * doodles.length)];
 			}
+			const usernameInput = document.getElementById("username");
+			const passwordInput = document.getElementById("password");
+			usernameInput.addEventListener("blur", function () {
+				const trimmedValue = this.value.trim();
+				this.value = trimmedValue;
+			});
+			passwordInput.addEventListener("blur", function () {
+				const trimmedValue = this.value.trim();
+				this.value = trimmedValue;
+			});
 		</script>
 	</body>
 </html>

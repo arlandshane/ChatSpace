@@ -31,27 +31,19 @@
 				<% } %>
 			</div>
 		</nav>
-
+		<!-- ------------------------------------------------------------------------------------------------------------------ -->
 		<hr />
-		<form style="display: flex" action="/" method="post">
-			<textarea
-				class="input-box"
-				type="text"
-				name="message"
-				id="message"
-				placeholder="Your message"
-				required
-			></textarea>
-			<button style="align-self: flex-end" class="btn" type="submit">
-				Add
-			</button>
-		</form>
 		<div
 			style="
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-around;
+				justify-content: center;
+				margin: 0.5rem 0;
+				padding: 0.5rem;
 				width: fit-content;
+				background-color: rgb(255, 236, 242);
+				border: 1px solid rgba(200, 100, 150, 0.5);
+				border-radius: 1rem;
 			"
 		>
 			<h2 style="display: inline; align-self: center">Users:</h2>
@@ -74,13 +66,35 @@
 			</div>
 			<% }) %>
 		</div>
-		<a href="/spaces">Spaces</a>
+		<!-- ------------------------------------------------------------------------------------------------------------------ -->
+		<a href="/spaces"><button class="btn">Spaces</button></a>
+		<button id="chat" class="btn">Chat</button>
+		<!-- ------------------------------------------------------------------------------------------------------------------ -->
+		<form style="display: flex" action="/" method="post">
+			<textarea
+				style="display: none"
+				maxlength="200"
+				type="text"
+				name="message"
+				id="message"
+				placeholder="Your message"
+				required
+			></textarea>
+			<button
+				id="add-btn"
+				style="align-self: flex-end; display: none"
+				class="btn"
+				type="submit"
+			>
+				Add
+			</button>
+		</form>
 		<h2>Messages:</h2>
 		<% persons.slice().reverse().forEach((person) => { %>
 		<div style="display: flex">
 			<p class="each-message">
 				<%= person.name %> <br />
-				"<span style="color: gray"><%= person.message %></span>"
+				~&nbsp; <span style="color: gray"><%= person.message %></span>
 			</p>
 		</div>
 		<% }); %>
@@ -115,6 +129,19 @@
 				</a>
 			</div>
 		</footer>
-		<script src="/client.js"></script>
+		<script defer>
+			const textArea = document.getElementById("message");
+			const addBtn = document.getElementById("add-btn");
+			const chat = document.getElementById("chat");
+			chat.addEventListener("click", () => {
+				if (textArea.style.display === "none") {
+					textArea.style.display = "inline-block";
+					addBtn.style.display = "inline-block";
+				} else {
+					textArea.style.display = "none";
+					addBtn.style.display = "none";
+				}
+			});
+		</script>
 	</body>
 </html>

@@ -66,5 +66,17 @@
 				</div>
 			</form>
 		</section>
+		<script>
+			const usernameInput = document.getElementById("emailOrUsername");
+			const passwordInput = document.getElementById("password");
+			usernameInput.addEventListener("blur", function () {
+				const trimmedValue = this.value.trim();
+				this.value = trimmedValue;
+			});
+			passwordInput.addEventListener("blur", function () {
+				const trimmedValue = this.value.trim();
+				this.value = trimmedValue;
+			});
+		</script>
 	</body>
 </html>
