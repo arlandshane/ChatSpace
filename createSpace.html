@@ -9,12 +9,18 @@
 	<body>
 		<nav style="padding: 0 1rem">
 			<h1>Create Space</h1>
-			<a href="/"><button class="btn">Home</button></a>
+			<div style="display: flex">
+				<a href="/spaces">
+					<button type="button" class="btn">All Spaces</button>
+				</a>
+				<a href="/"><button class="btn">Home</button></a>
+			</div>
 		</nav>
 		<hr />
 		<form action="/createSpace" method="post">
 			<label for="name">Space Name:</label>
 			<input
+				maxlength="20"
 				class="input-box"
 				type="text"
 				name="name"
@@ -22,5 +28,14 @@
 			/>
 			<button class="btn" type="submit">Create</button>
 		</form>
+		<div
+			style="
+				white-space: nowrap;
+				font-size: small;
+				font-style: italic;
+			"
+		>
+			*Max length: 20 characters
+		</div>
 	</body>
 </html>
