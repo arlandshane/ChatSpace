@@ -137,11 +137,13 @@
 			<% space.messages.reverse().forEach((message) => { %>
 			<div style="display: flex">
 				<p class="each-message">
-					<%= message.sender.username %> <br />
+					<% if(message.sender && message.sender.username) { %> <%=
+					message.sender.username %> <% } else { %> unknown <% } %>
+					<br />
 					~&nbsp; <span style="color: gray"><%= message.text %></span>
-					<span style="font-size: 0.7rem">
-						<%= message.timestamp.toLocaleTimeString([], { hour:
-						'2-digit', minute: '2-digit' }) %>
+					<span style="font-size: 0.7rem"
+						><%= message.timestamp.toLocaleTimeString([], { hour:
+						'2-digit', minute: '2-digit' }); %>
 					</span>
 				</p>
 			</div>

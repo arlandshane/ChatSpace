@@ -10,22 +10,38 @@
 	<body>
 		<nav style="padding: 0 1rem">
 			<h1>Profile Page</h1>
-			<a href="/">
-				<button class="btn">Home</button></a>
+			<a href="/"> <button class="btn">Home</button></a>
 		</nav>
 		<hr />
-		<h2></p><%= user.username %></h2>
-		<p>Email: <%= user.email %></p>
-		<p>User Id: <%= user._id %></p>
-		<p>Password: <%= user.password %></p>
-		<div>
-			<button style="width: 7rem" id="delete-btn" class="btn">
-				Delete Profile
-			</button>
+		<div id="blur" style="margin-left: 1rem">
+			<img class="profiles" src="<%= user.profilePicUrl %>" alt="" />
+			<h3><%= user.username %></h3>
+			<p>Email: <%= user.email %></p>
+			<p>User Id: <%= user._id %></p>
+			<p>Password: <%= user.password %></p>
+			<div>
+				<button id="delete-btn" class="btn">Delete Profile</button>
+				<!-- <button
+					class="btn"
+					onclick="document.getElementById('file-upload').click()"
+				>
+					Upload File
+				</button>
+				<input id="file-upload" type="file" style="display: none" /> -->
+			</div>
 		</div>
+
 		<div
 			id="dialog-box"
-			style="display: none; margin: auto; justify-content: center"
+			style="
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				display: none;
+				margin: auto;
+				justify-content: center;
+			"
 		>
 			<div
 				style="
@@ -88,15 +104,17 @@
 		<script>
 			const deleteBtn = document.getElementById("delete-btn");
 			const dialogBox = document.getElementById("dialog-box");
-			const confirm = document.getElementById("confirm");
 			const cancel = document.getElementById("cancel");
+			const blur = document.getElementById("blur");
 			deleteBtn.addEventListener("click", () => {
 				// console.log("delete button clicked");
+				blur.style.filter = "blur(0.5rem)";
 				dialogBox.style.display = "flex";
 				if (dialogBox.style.display === "flex") {
 					// console.log("diablog box is visible");
 					cancel.addEventListener("click", () => {
 						// console.log("cancel button clicked");
+						blur.style.filter = "none";
 						dialogBox.style.display = "none";
 					});
 
