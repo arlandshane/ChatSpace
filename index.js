@@ -236,7 +236,7 @@ app.get("/spaces/:spaceId", async (req, res) => {
 			})
 			.populate({
 				path: "messages.sender",
-				select: "username",
+				select: "username timestamp",
 			});
 		if (!space) {
 			return res.status(404).json({ message: "Space not found" });
@@ -316,6 +316,34 @@ app.post("/spaces/:spaceId/join", async (req, res) => {
 		space.participants.push(userId);
 		await space.save();
 		res.redirect(`/spaces/${req.params.spaceId}`);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Internal server error" });
+	}
+});
+
+app.post("/spaces/:spaceId/leave", async (req, res) => {
+	try {
+		const userId = req.session.userId;
+		const space = await Space.findById(req.params.spaceId);
+		if (!space) {
+			return res.status(404).json({ message: "Space not found" });
+		}
+		if (
+			!space.participants.some((participant) =>
+				participant._id.equals(userId)
+			)
+		) {
+			return res
+				.status(403)
+				.json({ message: "You are not a participant in this space" });
+		} else {
+			space.participants = space.participants.filter(
+				(participant) => !participant._id.equals(userId)
+			);
+			await space.save();
+			res.redirect(`/spaces/${req.params.spaceId}`);
+		}
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({ message: "Internal server error" });

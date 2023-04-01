@@ -17,15 +17,22 @@
 			</div>
 		</nav>
 		<hr />
-		<h2>Participants:</h2>
+
 		<div
 			style="
 				display: flex;
 				flex-wrap: wrap;
-				gap: 1rem;
-				margin-left: 0.5rem;
+				justify-content: center;
+				margin: 0.5rem 0;
+				padding: 0.5rem;
+				width: fit-content;
+				background-color: rgb(255, 236, 242);
+				border: 1px solid rgba(200, 100, 150, 0.5);
+				border-radius: 1rem;
+				gap: 0.5rem;
 			"
 		>
+			<h2 style="display: inline; align-self: center">Participants:</h2>
 			<% let isParticipant = false; %> <%
 			space.participants.forEach((participant) => { %>
 			<div
@@ -35,7 +42,7 @@
 					background-color: #ecf2ff;
 					border: 1px solid rgba(100, 150, 200, 0.5);
 					border-radius: 1rem;
-					padding: 1rem;
+					padding: 0.5rem;
 				"
 			>
 				<img
@@ -53,13 +60,38 @@
 			<button class="btn" type="submit">Join Space</button>
 		</form>
 		<% } else if(isParticipant) { %>
+		<form action="/spaces/<%= space._id %>/leave" method="post">
+			<button class="btn" type="submit">Leave Space</button>
+			<button
+				type="button"
+				id="share-btn"
+				class="btn"
+				onclick="copyLink()"
+			>
+				Share Space
+			</button>
+			<span id="copied"></span>
+		</form>
+
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
 				const hide = document.querySelectorAll(".hide");
+
 				hide.forEach((hid) => {
 					hid.style.display = "block";
 				});
 			});
+			function copyLink() {
+				const link = window.location.href;
+				navigator.clipboard.writeText(link).then(() => {
+					const share = document.getElementById("share-btn");
+					const copied = document.getElementById("copied");
+					copied.innerText = "Link Copied!";
+					setTimeout(() => {
+						copied.innerText = "";
+					}, 2000);
+				});
+			}
 		</script>
 		<% } %>
 
@@ -96,10 +128,16 @@
 		</div>
 		<div style="display: none" class="hide">
 			<h2>Messages:</h2>
-			<% space.messages.forEach((message) => { %>
-			<div>
-				<span><%= message.sender.username %></span> :
-				<span><%= message.text %></span>
+			<% space.messages.reverse().forEach((message) => { %>
+			<div style="display: flex">
+				<p class="each-message">
+					<%= message.sender.username %> <br />
+					~&nbsp; <span style="color: gray"><%= message.text %></span>
+					<span style="font-size: 0.7rem">
+						<%= message.timestamp.toLocaleTimeString([], { hour:
+						'2-digit', minute: '2-digit' }) %>
+					</span>
+				</p>
 			</div>
 			<% }) %>
 		</div>
