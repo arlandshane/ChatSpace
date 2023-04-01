@@ -18,10 +18,14 @@
 						color: black;
 						gap: 0.5rem;
 					"
-					href="/user/<%= currentUser %>"
+					href="/user/<%= currentUser.username %>"
 				>
-					<p><%= currentUser %></p>
-					<img class="avatar" src="<%= dp %>" alt="dp" />
+					<p><%= currentUser.username %></p>
+					<img
+						class="avatar"
+						src="<%= currentUser.profilePicUrl %>"
+						alt="dp"
+					/>
 				</a>
 				<% if (currentUser) { %>
 				<a href="/logout"><button class="btn">Logout</button></a>

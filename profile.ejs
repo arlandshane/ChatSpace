@@ -10,7 +10,10 @@
 	<body>
 		<nav style="padding: 0 1rem">
 			<h1>Profile Page</h1>
-			<a href="/"> <button class="btn">Home</button></a>
+			<div>
+				<button id="delete-btn" class="btn">Delete Profile</button>
+				<a href="/"> <button class="btn">Home</button></a>
+			</div>
 		</nav>
 		<hr />
 		<div id="blur" style="margin-left: 1rem">
@@ -20,7 +23,6 @@
 			<p>User Id: <%= user._id %></p>
 			<p>Password: <%= user.password %></p>
 			<div>
-				<button id="delete-btn" class="btn">Delete Profile</button>
 				<!-- <button
 					class="btn"
 					onclick="document.getElementById('file-upload').click()"
@@ -30,6 +32,132 @@
 				<input id="file-upload" type="file" style="display: none" /> -->
 			</div>
 		</div>
+		<hr />
+		<form action="/changeAvatar" method="post">
+			<div class="upload-container">
+				<label
+					style="align-self: center; font-weight: bold"
+					for="profilePic"
+				>
+					Change Avatar:
+				</label>
+				<div
+					style="
+						display: flex;
+						flex-wrap: wrap;
+						justify-content: center;
+					"
+				>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+					<div class="profile-pictures input-box">
+						<div class="selected">✔️</div>
+						<img class="doodle" alt="" />
+					</div>
+				</div>
+				<span
+					style="
+						white-space: nowrap;
+						margin: auto;
+						font-size: small;
+						font-style: italic;
+					"
+				>
+				</span>
+			</div>
+			<input type="hidden" name="profilePicUrl" id="profilePicUrl" />
+			<button value="submit" class="btn">Update Avatar</button>
+		</form>
+
+		<script>
+			const doodles = [
+				"https://doodleipsum.com/200x200/avatar?i=c2a46927c51b9a0707dcd491590fe419",
+				"https://doodleipsum.com/200x200/avatar?i=854652f6a35c1383f4d5fcf6e59bea81",
+				"https://doodleipsum.com/200x200/avatar?i=f46f5c42b613621a5cdf35e10f740152",
+
+				"https://doodleipsum.com/200x200/avatar-2?i=4eaa8e83ae7f03a591f0025589ae5cf8",
+				"https://doodleipsum.com/200x200/avatar-2?i=077be9b2a318567af33ea5f8802f357d",
+				"https://doodleipsum.com/200x200/avatar-2?i=6c54c7c35a2190dca17dac7ba729c061",
+
+				"https://doodleipsum.com/200x200/avatar-3?i=4ccf433e65467697da423130107f81bb",
+				"https://doodleipsum.com/200x200/avatar-3?i=8e20e722c8334a4d41f5aa5846d84b5c",
+				"https://doodleipsum.com/200x200/avatar-3?i=ff55f0ba0a7fd2846bb7e9300b806af8",
+
+				"https://doodleipsum.com/200x200/avatar-5?i=250ca9e94cc941f405a5ecd1f604a1f1",
+				"https://doodleipsum.com/200x200/avatar-5?i=0d84ab4c01878c56920a1ffb5b23e3bf",
+				"https://doodleipsum.com/200x200/avatar-5?i=68988796ecff7ce49d335d7e1f04e8ea",
+			];
+			const profilePics = document.querySelectorAll(".profile-pictures");
+			const profilePicUrlInput = document.getElementById("profilePicUrl");
+			const randomDoodles = document.querySelectorAll(".doodle");
+			const usedDoodles = new Set();
+			randomDoodles.forEach((randomDoodle) => {
+				let randomDoodleUrl;
+				do {
+					randomDoodleUrl =
+						doodles[Math.floor(Math.random() * doodles.length)];
+				} while (usedDoodles.has(randomDoodleUrl));
+				randomDoodle.src = randomDoodleUrl;
+				usedDoodles.add(randomDoodleUrl);
+			});
+			profilePics.forEach((profilePic) => {
+				profilePic.addEventListener("click", () => {
+					const selected = profilePic.querySelector(".selected");
+					profilePics.forEach((pic) => {
+						pic.querySelector(".selected").style.display = "none";
+					});
+					selected.style.display = "inline";
+					const profilePicUrl = profilePic.querySelector("img").src;
+					profilePicUrlInput.value = profilePicUrl;
+				});
+			});
+			if (!profilePicUrlInput.value) {
+				profilePicUrlInput.value =
+					doodles[Math.floor(Math.random() * doodles.length)];
+			}
+		</script>
 
 		<div
 			id="dialog-box"

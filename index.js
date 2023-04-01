@@ -52,7 +52,7 @@ app.get("/", async (req, res) => {
 		try {
 			const persons = await Person.find();
 			const users = await User.find();
-			const currentUser = req.session.username;
+			const currentUser = await User.findById(req.session.userId);
 			const dp = req.session.profilePicUrl;
 			ejs.renderFile(
 				path.join(__dirname, "index.ejs"),
@@ -374,6 +374,20 @@ app.get("/user/:username", async (req, res) => {
 			console.log(error);
 			res.status(500).send("Error retrieving data");
 		}
+	}
+});
+
+app.post("/changeAvatar", async (req, res) => {
+	try {
+		const avatar = req.body.profilePicUrl;
+		console.log("avatar: " + avatar);
+		const user = await User.findById(req.session.userId);
+		console.log("user: " + user);
+		await user.updateOne({ profilePicUrl: avatar });
+		res.status(200).redirect("/");
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Server error");
 	}
 });
 
