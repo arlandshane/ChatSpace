@@ -142,8 +142,9 @@
 					<br />
 					~&nbsp; <span style="color: gray"><%= message.text %></span>
 					<span style="font-size: 0.7rem"
-						><%= message.timestamp.toLocaleTimeString([], { hour:
-						'2-digit', minute: '2-digit' }); %>
+						><%= message.timestamp.toLocaleTimeString([], {timeZone:
+						'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
+						%>
 					</span>
 				</p>
 			</div>
