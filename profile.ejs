@@ -15,8 +15,8 @@
 				<a href="/"> <button class="btn">Home</button></a>
 			</div>
 		</nav>
-		<hr />
-		<div id="blur" style="margin-left: 1rem">
+		<hr class="blur" />
+		<div class="blur" style="margin-left: 1rem">
 			<img class="profiles" src="<%= user.profilePicUrl %>" alt="" />
 			<h3><%= user.username %></h3>
 			<p>Email: <%= user.email %></p>
@@ -32,8 +32,8 @@
 				<input id="file-upload" type="file" style="display: none" /> -->
 			</div>
 		</div>
-		<hr />
-		<form action="/changeAvatar" method="post">
+		<hr class="blur" />
+		<form class="blur" action="/changeAvatar" method="post">
 			<div class="upload-container">
 				<label
 					style="align-self: center; font-weight: bold"
@@ -173,10 +173,10 @@
 		>
 			<div
 				style="
-					border: 1px solid crimson;
-					background-color: white;
+					border: 1px solid rgb(200, 150, 150);
+					background-color: rgb(255, 236, 242);
 					padding: 0.5rem;
-					border-radius: 1rem;
+					border-radius: 1.5rem;
 				"
 			>
 				<p
@@ -184,9 +184,9 @@
 						padding: 1rem;
 						margin: auto;
 						display: block;
-						background-color: white;
-						border: 1px solid crimson;
-						border-radius: 1rem;
+						border: 1px solid rgb(200, 150, 150);
+						background-color: rgb(255, 236, 242);
+						border-radius: 2rem;
 						text-align: center;
 					"
 				>
@@ -196,7 +196,7 @@
 					Type:
 					<input
 						id="type-username"
-						style="padding: 0 0.5rem"
+						style="padding: 0 0.7rem"
 						type="text"
 						class="input-box"
 						placeholder="<%= user.username %>"
@@ -233,19 +233,22 @@
 			const deleteBtn = document.getElementById("delete-btn");
 			const dialogBox = document.getElementById("dialog-box");
 			const cancel = document.getElementById("cancel");
-			const blur = document.getElementById("blur");
+			const blurElements = document.querySelectorAll(".blur");
 			deleteBtn.addEventListener("click", () => {
 				// console.log("delete button clicked");
-				blur.style.filter = "blur(0.5rem)";
+				blurElements.forEach((element) => {
+					element.style.filter = "blur(0.5rem)";
+				});
 				dialogBox.style.display = "flex";
 				if (dialogBox.style.display === "flex") {
 					// console.log("diablog box is visible");
 					cancel.addEventListener("click", () => {
 						// console.log("cancel button clicked");
-						blur.style.filter = "none";
+						blurElements.forEach((element) => {
+							element.style.filter = "none";
+						});
 						dialogBox.style.display = "none";
 					});
-
 					const typeDelete = document.getElementById("type-username");
 					const confirm = document.getElementById("confirm");
 					typeDelete.addEventListener("input", () => {

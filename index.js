@@ -9,6 +9,7 @@ const ejs = require("ejs");
 const Person = require("./models/person");
 const User = require("./models/user");
 const Space = require("./models/space");
+const Spacetube = require("./models/spacetube");
 // const Room = require("./models/room");
 // const Chat = require("./models/chat");
 
@@ -391,7 +392,65 @@ app.post("/changeAvatar", async (req, res) => {
 	}
 });
 
+app.get("/spacify", async (req, res) => {
+	ejs.renderFile(path.join(__dirname, "spacify.ejs"), (err, html) => {
+		if (err) {
+			console.log(err);
+			res.status(500).send("Error rendering template");
+		} else {
+			res.send(html);
+		}
+	});
+});
+
+app.post("/spacify", async (req, res) => {
+	try {
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+app.get("/spacetube", async (req, res) => {
+	try {
+		const spacetubes = await Spacetube.find()
+			.populate({
+				path: "embed",
+			})
+			.populate({
+				path: "sender",
+				select: "username",
+			});
+		ejs.renderFile(
+			path.join(__dirname, "spacetube.ejs"),
+			{ spacetubes },
+			(err, html) => {
+				if (err) {
+					console.log(err);
+					res.status(500).send("Error rendering template");
+				} else {
+					res.send(html);
+				}
+			}
+		);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+app.post("/spacetube", async (req, res) => {
+	try {
+		const { embed } = req.body;
+		const sender = req.session.userId;
+		const spacetube = new Spacetube({ embed, sender });
+		await spacetube.save();
+		res.redirect("/spacetube");
+	} catch (err) {
+		console.log(err);
+	}
+});
+
 app.post("/delete", async (req, res) => {
+	// remmeber to delete all user data
 	try {
 		const user = await User.findOneAndDelete({
 			username: req.session.username,

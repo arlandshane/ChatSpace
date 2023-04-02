@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SpaceTube</title>
+		<link rel="stylesheet" href="/css/style.css" />
+	</head>
+	<body>
+		<nav style="padding: 0 1rem">
+			<h1>SpaceTube</h1>
+			<a href="/"><button class="btn">Home</button></a>
+		</nav>
+		<hr />
+
+		<form action="/spacetube" method="post">
+			<label for="embed">Enter Video Link:</label>
+			<input class="input-box" type="url" name="embed" id="embed" />
+			<button class="btn" type="submit">Submit</button>
+		</form>
+		<hr />
+		<div style="display: flex; flex-wrap: wrap; gap: 1rem">
+			<% spacetubes.forEach((spacetube, i) => { %>
+			<div
+				style="
+					display: flex;
+					padding: 0 0.7rem 0.7rem 0.7rem;
+					flex-direction: column;
+					width: fit-content;
+					border: 1px solid gray;
+					background-color: rgb(255, 236, 242);
+					border: 1px solid rgba(200, 100, 150, 0.5);
+					border-radius: 1rem 1rem 2rem 2rem;
+				"
+			>
+				<p style="margin: 0.2rem; font-size: 1.1rem">
+					<%= spacetube.sender.username %> was watching:
+				</p>
+				<iframe
+					style="
+						width: 25rem;
+						aspect-ratio: 16 / 9;
+						border-radius: 2rem;
+					"
+					id="iframe<%= i %>"
+					src=""
+					title="YouTube video player"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen
+					loading="lazy"
+				></iframe>
+			</div>
+			<i style="display: none" id="share-link-<%= i %>">
+				<%= spacetube.embed %>
+			</i>
+			<% }) %>
+		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const shareLinks = document.querySelectorAll(
+					'[id^="share-link-"]'
+				);
+				shareLinks.forEach((shareLink, i) => {
+					const share = shareLink.innerText;
+					console.log("share: " + share);
+					const iframe = document.getElementById("iframe" + i);
+					const regex =
+						/(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/)?(.+)/;
+					const video_id = share.match(regex)[1];
+					console.log("video_id: " + video_id);
+					iframe.setAttribute(
+						"src",
+						`https://www.youtube-nocookie.com/embed/${video_id}`
+					);
+					console.log("iframe: " + iframe.getAttribute("src"));
+				});
+			});
+		</script>
+	</body>
+</html>
