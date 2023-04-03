@@ -12,6 +12,7 @@ const Person = require("./models/person");
 const User = require("./models/user");
 const Google = require("./models/google");
 const Space = require("./models/space");
+const Spacify = require("./models/spacify");
 const Spacetube = require("./models/spacetube");
 const Private = require("./models/private");
 
@@ -528,18 +529,39 @@ app.post("/changeAvatar", async (req, res) => {
 });
 
 app.get("/spacify", async (req, res) => {
-	ejs.renderFile(path.join(__dirname, "spacify.ejs"), (err, html) => {
-		if (err) {
-			console.log(err);
-			res.status(500).send("Error rendering template");
-		} else {
-			res.send(html);
-		}
-	});
+	try {
+		const spacifys = await Spacify.find()
+			.populate({
+				path: "embed",
+			})
+			.populate({
+				path: "sender",
+				select: "username",
+			});
+		ejs.renderFile(
+			path.join(__dirname, "spacify.ejs"),
+			{ spacifys },
+			(err, html) => {
+				if (err) {
+					console.log(err);
+					res.status(500).send("Error rendering template");
+				} else {
+					res.send(html);
+				}
+			}
+		);
+	} catch (err) {
+		console.log(err);
+	}
 });
 
 app.post("/spacify", async (req, res) => {
 	try {
+		const { embed } = req.body;
+		const sender = req.session.userId;
+		const spacify = new Spacify({ embed, sender });
+		await spacify.save();
+		res.redirect("/spacify");
 	} catch (err) {
 		console.log(err);
 	}
