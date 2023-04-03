@@ -3,11 +3,14 @@ const express = require("express");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const mongoose = require("mongoose");
+const { OAuth2Client } = require("google-auth-library");
+const { google } = require("googleapis");
 const bodyParser = require("body-parser");
 const path = require("path");
 const ejs = require("ejs");
 const Person = require("./models/person");
 const User = require("./models/user");
+const Google = require("./models/google");
 const Space = require("./models/space");
 const Spacetube = require("./models/spacetube");
 // const Room = require("./models/room");
@@ -26,6 +29,13 @@ const connectDB = async () => {
 		console.log(error);
 	}
 };
+
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+// const REDIRECT_URI = "https://chat.arlandshane.com/auth/google/callback";
+const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
+
+const oauth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
 const store = new MongoDBStore({
 	uri: process.env.MONGO_URI,
@@ -125,7 +135,7 @@ app.post("/login", async (req, res) => {
 		if (user && user.password === password) {
 			req.session.username = user.username;
 			req.session.userId = user._id;
-			console.log("username in /login: " + req.session.username);
+			// console.log("username in /login: " + req.session.username);
 			res.redirect("/");
 		} else {
 			res.status(401).send("<h1>Error: 401</h1><p>Error logging in</p>");
@@ -359,9 +369,12 @@ app.get("/user/:username", async (req, res) => {
 	} else {
 		try {
 			const user = await User.findOne({ username: req.session.username });
+			const google = await Google.findOne({
+				userId: req.session.userId,
+			});
 			ejs.renderFile(
 				path.join(__dirname, "profile.ejs"),
-				{ user },
+				{ user, google },
 				(err, html) => {
 					if (err) {
 						console.log(err);
@@ -375,6 +388,42 @@ app.get("/user/:username", async (req, res) => {
 			console.log(error);
 			res.status(500).send("Error retrieving data");
 		}
+	}
+});
+
+app.get("/auth/google", (req, res) => {
+	const url = oauth2Client.generateAuthUrl({
+		access_type: "offline",
+		scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+	});
+	res.redirect(url);
+});
+
+app.get("/auth/google/callback", async (req, res) => {
+	const code = req.query.code;
+	try {
+		const { tokens } = await oauth2Client.getToken(code);
+		// console.log(tokens);
+		oauth2Client.setCredentials(tokens);
+		const idToken = tokens.id_token;
+		const [header, payload, signature] = idToken.split(".");
+		const decodedPayload = JSON.parse(atob(payload));
+		const userId = req.session.userId;
+		const googlename = decodedPayload.name;
+		const gmail = decodedPayload.email;
+		const googlePicUrl = decodedPayload.picture;
+		// console.log(userId, googlename, gmail, googlePicUrl);
+		const googleUser = await Google.findOne({ userId: req.session.userId });
+		if (googleUser) {
+			return res.send("Already connected to Google");
+		} else {
+			google = new Google({ userId, googlename, gmail, googlePicUrl });
+			await google.save();
+			res.redirect(`/user/${req.session.username}`);
+		}
+	} catch (err) {
+		console.error(err);
+		res.send("Error!");
 	}
 });
 

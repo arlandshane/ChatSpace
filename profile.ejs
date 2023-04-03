@@ -16,12 +16,50 @@
 			</div>
 		</nav>
 		<hr class="blur" />
-		<div class="blur" style="margin-left: 1rem">
-			<img class="profiles" src="<%= user.profilePicUrl %>" alt="" />
-			<h3><%= user.username %></h3>
-			<p>Email: <%= user.email %></p>
-			<p>User Id: <%= user._id %></p>
-			<p>Password: <%= user.password %></p>
+		<div
+			class="blur"
+			style="
+				margin-left: 1rem;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+			"
+		>
+			<div>
+				<img class="profiles" src="<%= user.profilePicUrl %>" alt="" />
+				<h3><%= user.username %></h3>
+				<p>Email: <%= user.email %></p>
+				<p>User Id: <%= user._id %></p>
+				<p>Password: <%= user.password %></p>
+				<a href="/auth/google">
+					<button id="connect-google" class="btn" type="button">
+						Connect Google
+					</button>
+				</a>
+			</div>
+			<div>
+				<% if (google === "unknown") { %>
+				<p>No Google Account connected</p>
+				<% } else if(google) { %>
+				<div>
+					<script>
+						document.getElementById(
+							"connect-google"
+						).style.display = "none";
+					</script>
+					<img
+						class="profiles"
+						src="<%= google.googlePicUrl %>"
+						alt="Google Profile Picture"
+					/>
+					<h2>Google Account</h2>
+					<p>Name: <%= google.googlename %></p>
+					<p>Email: <%= google.gmail %></p>
+					<p>Connect to: <%= google.userId %></p>
+				</div>
+				<% } %>
+			</div>
+
 			<div>
 				<!-- <button
 					class="btn"
