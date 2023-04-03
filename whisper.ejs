@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Whisper</title>
+		<link rel="stylesheet" href="/css/style.css" />
+	</head>
+	<body>
+		<nav style="padding: 0 1rem">
+			<h1>
+				<span style="font-size: medium; font-weight: normal"
+					><%= sender.username %></span
+				>/<%= receiver.username %>
+			</h1>
+			<div style="display: flex">
+				<a href="/privateChat"
+					><button type="button" class="btn">
+						All Private Chats
+					</button>
+				</a>
+				<a href="/"><button type="button" class="btn">Home</button></a>
+			</div>
+		</nav>
+		<hr />
+		<% privates.forEach(private => { %>
+		<p style="margin: 0">
+			<%= private.sender.username %>
+			<br />
+			~&nbsp; <span><%= private.messages %></span>
+		</p>
+		<br />
+		<% }) %>
+
+		<form
+			action="/privateChat/<%= sender._id %>/<%= receiver._id %>"
+			method="post"
+		>
+			<label for="Messages">Whisper:</label>
+			<input class="input-box" type="text" name="message" />
+			<button class="btn" type="submit">Send</button>
+		</form>
+	</body>
+</html>

@@ -13,8 +13,7 @@ const User = require("./models/user");
 const Google = require("./models/google");
 const Space = require("./models/space");
 const Spacetube = require("./models/spacetube");
-// const Room = require("./models/room");
-// const Chat = require("./models/chat");
+const Private = require("./models/private");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,8 +31,8 @@ const connectDB = async () => {
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-// const REDIRECT_URI = "https://chat.arlandshane.com/auth/google/callback";
-const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
+const REDIRECT_URI = "https://chat.arlandshane.com/auth/google/callback";
+// const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
 
 const oauth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
@@ -175,6 +174,71 @@ app.get("/logout", (req, res) => {
 			res.redirect("/login");
 		}
 	});
+});
+
+app.get("/privateChat", async (req, res) => {
+	try {
+		const users = await User.find();
+		const sender = await User.findById(req.session.userId);
+		ejs.renderFile(
+			path.join(__dirname, "/privateChat.ejs"),
+			{ users, sender },
+			(err, html) => {
+				if (err) {
+					console.log(err);
+					res.status(500).send("Error rendering template");
+				} else {
+					res.send(html);
+				}
+			}
+		);
+	} catch (err) {
+		res.status(500).json({ message: err.message });
+	}
+});
+app.get("/privateChat/:sender/:receiver", async (req, res) => {
+	try {
+		const privates = await Private.find({
+			$or: [
+				{ sender: req.params.sender, receiver: req.params.receiver },
+				{ sender: req.params.receiver, receiver: req.params.sender },
+			],
+		})
+			.populate("sender")
+			.sort({ timestamp: 1 });
+		const sender = await User.findById(req.params.sender);
+		const receiver = await User.findById(req.params.receiver);
+		ejs.renderFile(
+			path.join(__dirname, "/whisper.ejs"),
+			{ privates, sender, receiver },
+			(err, html) => {
+				if (err) {
+					console.log(err);
+				} else {
+					res.send(html);
+				}
+			}
+		);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+app.post("/privateChat/:sender/:receiver", async (req, res) => {
+	const privateMessage = new Private({
+		sender: req.params.sender,
+		receiver: req.params.receiver,
+		messages: req.body.message,
+		timestamp: Date.now(),
+	});
+	try {
+		const newPrivate = await privateMessage.save();
+		res.status(201).redirect(
+			`/privateChat/${req.params.sender}/${req.params.receiver}`
+		);
+	} catch (err) {
+		res.status(400).json({ message: err.message });
+	}
 });
 
 app.get("/createSpace", async (req, res) => {

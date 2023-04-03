@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Private Chat</title>
+		<link rel="stylesheet" href="/css/style.css" />
+	</head>
+	<body>
+		<nav style="padding: 0 1rem">
+			<h1>Private Chat</h1>
+			<a href="/"><button type="button" class="btn">Home</button></a>
+		</nav>
+		<hr />
+		<div style="display: flex; gap: 1rem">
+			<% users.forEach(user => { %> <% if(sender.username !==
+			user.username) { %>
+			<a href="/privateChat/<%= sender._id %>/<%= user._id %>">
+				<button type="button" class="btn"><%= user.username %></button>
+			</a>
+			<% } %> <% }) %>
+		</div>
+	</body>
+</html>

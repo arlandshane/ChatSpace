@@ -14,13 +14,19 @@
 		<hr />
 
 		<form action="/spacetube" method="post">
-			<label for="embed">Enter Video Link:</label>
-			<input class="input-box" type="url" name="embed" id="embed" />
+			<label for="embed">Enter yours:</label>
+			<input
+				class="input-box"
+				type="url"
+				name="embed"
+				id="embed"
+				placeholder="Enter Video Link"
+			/>
 			<button class="btn" type="submit">Submit</button>
 		</form>
 		<hr />
 		<div style="display: flex; flex-wrap: wrap; gap: 1rem">
-			<% spacetubes.forEach((spacetube, i) => { %>
+			<% spacetubes.reverse().forEach((spacetube, i) => { %>
 			<div
 				style="
 					display: flex;
