@@ -196,31 +196,48 @@ app.get("/privateChat", async (req, res) => {
 		res.status(500).json({ message: err.message });
 	}
 });
+
 app.get("/privateChat/:sender/:receiver", async (req, res) => {
-	try {
-		const privates = await Private.find({
-			$or: [
-				{ sender: req.params.sender, receiver: req.params.receiver },
-				{ sender: req.params.receiver, receiver: req.params.sender },
-			],
-		})
-			.populate("sender")
-			.sort({ timestamp: 1 });
-		const sender = await User.findById(req.params.sender);
-		const receiver = await User.findById(req.params.receiver);
-		ejs.renderFile(
-			path.join(__dirname, "/whisper.ejs"),
-			{ privates, sender, receiver },
-			(err, html) => {
-				if (err) {
-					console.log(err);
-				} else {
-					res.send(html);
+	console.log(
+		"req.session.userId: " +
+			req.session.userId +
+			" and req.params.sender: " +
+			req.params.sender
+	);
+	if (req.session.userId.toString() === req.params.sender) {
+		try {
+			const privates = await Private.find({
+				$or: [
+					{
+						sender: req.params.sender,
+						receiver: req.params.receiver,
+					},
+					{
+						sender: req.params.receiver,
+						receiver: req.params.sender,
+					},
+				],
+			})
+				.populate("sender")
+				.sort({ timestamp: 1 });
+			const sender = await User.findById(req.params.sender);
+			const receiver = await User.findById(req.params.receiver);
+			ejs.renderFile(
+				path.join(__dirname, "/whisper.ejs"),
+				{ privates, sender, receiver },
+				(err, html) => {
+					if (err) {
+						console.log(err);
+					} else {
+						res.send(html);
+					}
 				}
-			}
-		);
-	} catch (err) {
-		console.log(err);
+			);
+		} catch (err) {
+			console.log(err);
+		}
+	} else {
+		res.send("You are not authorized to enter this chat");
 	}
 });
 
@@ -467,7 +484,7 @@ app.get("/auth/google/callback", async (req, res) => {
 	const code = req.query.code;
 	try {
 		const { tokens } = await oauth2Client.getToken(code);
-		console.log(tokens);
+		// console.log(tokens);
 		oauth2Client.setCredentials(tokens);
 		const idToken = tokens.id_token;
 		const [header, payload, signature] = idToken.split(".");
@@ -476,12 +493,17 @@ app.get("/auth/google/callback", async (req, res) => {
 		const googlename = decodedPayload.name;
 		const gmail = decodedPayload.email;
 		const googlePicUrl = decodedPayload.picture;
-		console.log(userId, googlename, gmail, googlePicUrl);
+		// console.log(userId, googlename, gmail, googlePicUrl);
 		const googleUser = await Google.findOne({ userId: req.session.userId });
 		if (googleUser) {
 			return res.send("Already connected to Google");
 		} else {
-			let google = new Google({ userId, googlename, gmail, googlePicUrl });
+			let google = new Google({
+				userId,
+				googlename,
+				gmail,
+				googlePicUrl,
+			});
 			await google.save();
 			res.redirect(`/user/${req.session.username}`);
 		}
@@ -494,9 +516,9 @@ app.get("/auth/google/callback", async (req, res) => {
 app.post("/changeAvatar", async (req, res) => {
 	try {
 		const avatar = req.body.profilePicUrl;
-		console.log("avatar: " + avatar);
+		// console.log("avatar: " + avatar);
 		const user = await User.findById(req.session.userId);
-		console.log("user: " + user);
+		// console.log("user: " + user);
 		await user.updateOne({ profilePicUrl: avatar });
 		res.status(200).redirect("/");
 	} catch (error) {
