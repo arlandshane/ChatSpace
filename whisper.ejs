@@ -23,15 +23,6 @@
 			</div>
 		</nav>
 		<hr />
-		<% privates.forEach(private => { %>
-		<p style="margin: 0">
-			<%= private.sender.username %>
-			<br />
-			~&nbsp; <span><%= private.messages %></span>
-		</p>
-		<br />
-		<% }) %>
-
 		<form
 			action="/privateChat/<%= sender._id %>/<%= receiver._id %>"
 			method="post"
@@ -40,5 +31,17 @@
 			<input class="input-box" type="text" name="message" />
 			<button class="btn" type="submit">Send</button>
 		</form>
+		<% privates.reverse().forEach(private => { %>
+		<p style="margin: 0">
+			<%= private.sender.username %>
+			<br />
+			~&nbsp; <span style="color: gray"><%= private.messages %></span>
+			<span style="font-size: 0.7rem">
+				<%= private.timestamp.toLocaleTimeString([], {timeZone:
+				'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }); %>
+			</span>
+		</p>
+		<br />
+		<% }) %>
 	</body>
 </html>

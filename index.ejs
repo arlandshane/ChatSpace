@@ -10,23 +10,23 @@
 	<body>
 		<nav style="padding: 0 1rem">
 			<h1>Chat Space</h1>
+			<a
+				style="
+					display: inline-flex;
+					text-decoration: none;
+					color: black;
+					gap: 0.5rem;
+				"
+				href="/user/<%= currentUser.username %>"
+			>
+				<p><%= currentUser.username %></p>
+				<img
+					class="avatar"
+					src="<%= currentUser.profilePicUrl %>"
+					alt="dp"
+				/>
+			</a>
 			<div>
-				<a
-					style="
-						display: inline-flex;
-						text-decoration: none;
-						color: black;
-						gap: 0.5rem;
-					"
-					href="/user/<%= currentUser.username %>"
-				>
-					<p><%= currentUser.username %></p>
-					<img
-						class="avatar"
-						src="<%= currentUser.profilePicUrl %>"
-						alt="dp"
-					/>
-				</a>
 				<% if (currentUser) { %>
 				<a href="/logout"><button class="btn">Logout</button></a>
 				<% } else { %>

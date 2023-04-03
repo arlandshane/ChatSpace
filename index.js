@@ -467,7 +467,7 @@ app.get("/auth/google/callback", async (req, res) => {
 	const code = req.query.code;
 	try {
 		const { tokens } = await oauth2Client.getToken(code);
-		// console.log(tokens);
+		console.log(tokens);
 		oauth2Client.setCredentials(tokens);
 		const idToken = tokens.id_token;
 		const [header, payload, signature] = idToken.split(".");
@@ -476,12 +476,12 @@ app.get("/auth/google/callback", async (req, res) => {
 		const googlename = decodedPayload.name;
 		const gmail = decodedPayload.email;
 		const googlePicUrl = decodedPayload.picture;
-		// console.log(userId, googlename, gmail, googlePicUrl);
+		console.log(userId, googlename, gmail, googlePicUrl);
 		const googleUser = await Google.findOne({ userId: req.session.userId });
 		if (googleUser) {
 			return res.send("Already connected to Google");
 		} else {
-			google = new Google({ userId, googlename, gmail, googlePicUrl });
+			let google = new Google({ userId, googlename, gmail, googlePicUrl });
 			await google.save();
 			res.redirect(`/user/${req.session.username}`);
 		}

@@ -18,14 +18,9 @@
 		<hr class="blur" />
 		<div
 			class="blur"
-			style="
-				margin-left: 1rem;
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
-			"
+			style="margin-left: 1rem; display: flex; flex-wrap: wrap"
 		>
-			<div>
+			<div style="flex: 1; width: 50%">
 				<img class="profiles" src="<%= user.profilePicUrl %>" alt="" />
 				<h3><%= user.username %></h3>
 				<p>Email: <%= user.email %></p>
@@ -37,7 +32,7 @@
 					</button>
 				</a>
 			</div>
-			<div>
+			<div style="flex: 1; width: 50%">
 				<% if (google === "unknown") { %>
 				<p>No Google Account connected</p>
 				<% } else if(google) { %>
@@ -55,7 +50,7 @@
 					<h2>Google Account</h2>
 					<p>Name: <%= google.googlename %></p>
 					<p>Email: <%= google.gmail %></p>
-					<p>Connect to: <%= google.userId %></p>
+					<p>Connected to: <%= google.userId %></p>
 				</div>
 				<% } %>
 			</div>
