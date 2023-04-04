@@ -11,6 +11,11 @@ nav {
 	padding: 1rem;
 }
 
+a {
+	text-decoration: none;
+	color: black;
+}
+
 h1 {
 	margin: 0;
 	align-self: center;
@@ -178,4 +183,45 @@ h1 {
 	width: fit-content;
 	max-width: 30rem;
 	border-radius: 1rem;
+}
+
+body {
+	--scrollbar-width: 1px;
+	--scrollbar-bg-color: gray;
+}
+
+::-webkit-scrollbar {
+	width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-bg-color);
+}
+
+::-webkit-scrollbar-track {
+	background-color: #f0f0f0;
+}
+
+::-moz-scrollbar {
+	width: var(--scrollbar-width);
+}
+
+::-moz-scrollbar-thumb {
+	background-color: var(--scrollbar-bg-color);
+}
+
+::-moz-scrollbar-track {
+	background-color: #f0f0f0;
+}
+
+::-ms-scrollbar {
+	width: var(--scrollbar-width);
+}
+
+::-ms-scrollbar-thumb {
+	background-color: var(--scrollbar-bg-color);
+}
+
+::-ms-scrollbar-track {
+	background-color: #f0f0f0;
 }

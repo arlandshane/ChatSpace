@@ -63,11 +63,12 @@ app.get("/", async (req, res) => {
 		try {
 			const persons = await Person.find();
 			const users = await User.find();
+			const spaces = await Space.find();
 			const currentUser = await User.findById(req.session.userId);
 			const dp = req.session.profilePicUrl;
 			ejs.renderFile(
 				path.join(__dirname, "index.ejs"),
-				{ persons, currentUser, dp, users },
+				{ persons, spaces, currentUser, dp, users },
 				(err, html) => {
 					if (err) {
 						console.log(err);
