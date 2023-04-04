@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Whisper</title>
+		<title><%= receiver.username %></title>
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 	<body>
@@ -28,7 +28,14 @@
 			method="post"
 		>
 			<label for="Messages">Whisper:</label>
-			<input class="input-box" type="text" name="message" />
+			<input
+				class="input-box"
+				style="width: 50%"
+				placeholder="*Character limit: 160"
+				maxlength="160"
+				type="text"
+				name="message"
+			/>
 			<button class="btn" type="submit">Send</button>
 		</form>
 		<% privates.reverse().forEach(private => { %>

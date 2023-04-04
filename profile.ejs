@@ -19,15 +19,19 @@
 			</div>
 		</nav>
 		<hr class="blur" />
-		<div
-			class="blur"
-			style="margin-left: 1rem; display: flex; flex-wrap: wrap"
-		>
-			<div style="flex: 1; width: 50%">
-				<img class="profiles" src="<%= user.profilePicUrl %>" alt="" />
+		<div class="blur" style="margin-left: 1rem">
+			<div>
 				<h3><%= user.username %></h3>
+				<img class="profiles" src="<%= user.profilePicUrl %>" alt="" />
+				<% if(google) { %>
+				<img
+					class="profiles"
+					src="<%= google.googlePicUrl %>"
+					alt="Google Profile Picture"
+				/>
+				<p style="color: lightseagreen">Connected to Google</p>
+				<% } %>
 				<p>Email: <%= user.email %></p>
-				<p>User Id: <%= user._id %></p>
 				<p>Password: <%= user.password %></p>
 				<a href="/auth/google">
 					<button id="connect-google" class="btn" type="button">
@@ -35,28 +39,17 @@
 					</button>
 				</a>
 			</div>
-			<div style="flex: 1; width: 50%">
-				<% if (google === "unknown") { %>
-				<p>No Google Account connected</p>
-				<% } else if(google) { %>
-				<div>
-					<script>
-						document.getElementById(
-							"connect-google"
-						).style.display = "none";
-					</script>
-					<img
-						class="profiles"
-						src="<%= google.googlePicUrl %>"
-						alt="Google Profile Picture"
-					/>
-					<h2>Google Account</h2>
-					<p>Name: <%= google.googlename %></p>
-					<p>Email: <%= google.gmail %></p>
-					<p>Connected to: <%= google.userId %></p>
-				</div>
-				<% } %>
+			<% if (google === "unknown") { %>
+			<p>No Google Account connected</p>
+			<% } else if(google) { %>
+			<div>
+				<script>
+					document.getElementById("connect-google").style.display =
+						"none";
+				</script>
+				<p>Name: <%= google.googlename %></p>
 			</div>
+			<% } %>
 		</div>
 		<hr class="blur" />
 		<form class="blur" action="/changeAvatar" method="post">
