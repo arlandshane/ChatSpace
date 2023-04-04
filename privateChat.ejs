@@ -12,12 +12,45 @@
 			<a href="/"><button type="button" class="btn">Home</button></a>
 		</nav>
 		<hr />
-		<div style="display: flex; gap: 1rem">
+
+		
+
+		<h2 style="display: inline; align-self: center">Users</h2>
+		<div class="private-users-div">
 			<% users.forEach(user => { %> <% if(sender.username !==
 			user.username) { %>
-			<a href="/privateChat/<%= sender._id %>/<%= user._id %>">
-				<button type="button" class="btn"><%= user.username %></button>
+			<div style="text-align: center">
+				<div
+					style="
+						align-self: center;
+						margin-top: 0.5rem;
+						font-size: smaller;
+						text-decoration: none;
+						color: black;
+					"
+				>
+				<a href="/privateChat/<%= sender._id %>/<%= user._id %>">
+					<img
+						class="profiles"
+						src="<%= user.profilePicUrl %>"
+						alt=""
+					/>
+				</div>
+				<div
+					style="
+						font-size: smaller;
+						overflow: hidden;
+						display: inline-block;
+						text-align: center;
+						white-space: nowrap;
+						max-width: 7rem;
+						text-overflow: ellipsis;
+					"
+				>
+					<%= user.username %>
+				</div>
 			</a>
+			</div>
 			<% } %> <% }) %>
 		</div>
 	</body>

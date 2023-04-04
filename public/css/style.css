@@ -165,8 +165,12 @@ h1 {
 	transition-duration: 200ms;
 	background-color: white;
 	border-radius: 100%;
-	box-shadow: 0 0 0 2px rgba(220, 20, 60, 0.5);
+	outline: 2px solid gainsboro;
 	margin: 0 0.8rem;
+}
+
+.profiles:hover {
+	outline: 2px solid crimson;
 }
 
 .get-user-info {
@@ -184,6 +188,19 @@ h1 {
 	max-width: 30rem;
 	border-radius: 1rem;
 }
+
+.private-users-div {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0.25rem 0;
+	padding: 0.25rem;
+	width: fit-content;
+	background-color: rgb(255, 236, 242);
+	border: 1px solid rgba(200, 100, 150, 0.5);
+	border-radius: 1rem;
+}
+
+/*  */
 
 body {
 	--scrollbar-width: 1px;
