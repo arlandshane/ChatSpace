@@ -484,6 +484,17 @@ app.get("/auth/google", (req, res) => {
 	res.redirect(url);
 });
 
+app.get("/auth/google/disconnect", async (req, res) => {
+	const userId = req.session.userId;
+	try {
+		await Google.findOneAndDelete({ userId });
+		res.redirect(`/user/${req.session.username}`);
+	} catch (err) {
+		console.error(err);
+		res.send("Error!");
+	}
+});
+
 app.get("/auth/google/callback", async (req, res) => {
 	const code = req.query.code;
 	try {

@@ -37,63 +37,27 @@
 			</div>
 		</nav>
 		<hr />
-		<div style="display: flex">
-			<!-- <div
-				style="
-					display: flex;
-					flex-direction: column;
-					overflow: auto;
-					margin: 0.25rem 0;
-					padding: 0.25rem;
-					width: 10rem;
-					height: 85vh;
-					background-color: rgb(255, 236, 242);
-					border: 1px solid rgba(200, 100, 150, 0.5);
-					border-radius: 1rem;
-				"
+		<div
+			style="
+				display: flex;
+				flex-wrap: nowrap;
+				overflow-x: auto;
+				width: 95vw;
+			"
+		>
+			<% users.forEach(user => { %>
+			<button
+				type="button"
+				class="btn"
+				style="width: fit-content; border-radius: 0.5rem"
 			>
-				<h2 style="display: inline; align-self: center">Users</h2>
-				<% users.forEach((user) => { %>
-				<div style="text-align: center">
-					<div
-						style="
-							align-self: center;
-							margin-top: 0.5rem;
-							font-size: smaller;
-							text-decoration: none;
-							color: black;
-						"
-					>
-						<img
-							class="profiles"
-							src="<%= user.profilePicUrl %>"
-							alt=""
-						/>
-					</div>
-					<div
-						style="
-							font-size: smaller;
-							overflow: hidden;
-							display: inline-block;
-							text-align: center;
-							white-space: nowrap;
-							max-width: 7rem;
-							text-overflow: ellipsis;
-						"
-					>
-						<%= user.username %>
-					</div>
-				</div>
-				<% }) %>
-			</div> -->
+				<%= user.username %>
+			</button>
+			<% }) %>
+		</div>
+		<div style="display: flex">
 			<div>
-				<div
-					style="
-						display: flex;
-						justify-content: space-evenly;
-						flex-wrap: wrap;
-					"
-				>
+				<div style="display: flex; flex-wrap: wrap">
 					<a href="/privateChat">
 						<button class="btn" style="border-radius: 0.5rem">
 							Chats
@@ -119,19 +83,7 @@
 						Post
 					</button>
 				</div>
-				<form
-					id="form"
-					style="
-						display: none;
-						position: absolute;
-						left: 50%;
-						top: 50%;
-						transform: translate(-50%, -50%);
-						z-index: 9;
-					"
-					action="/"
-					method="post"
-				>
+				<form id="form" action="/" method="post">
 					<textarea
 						style="width: 30rem"
 						maxlength="200"
@@ -156,11 +108,16 @@
 					<% persons.slice().reverse().forEach((person) => { %>
 					<div style="display: flex; margin-left: 0.5rem">
 						<p class="each-message">
-							<%= person.name %> <br />
-							~&nbsp;
-							<span style="color: gray"
-								><%= person.message %></span
+							<%= person.name %>
+							<span
+								style="
+									opacity: 0.8;
+									font-weight: lighter;
+									white-space: pre-line;
+								"
 							>
+								~&nbsp;<%= person.message %>
+							</span>
 						</p>
 					</div>
 					<% }); %>
