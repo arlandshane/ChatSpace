@@ -19,50 +19,107 @@
 			</div>
 		</nav>
 		<hr />
-		<div
-			style="
-				display: flex;
-				flex-direction: column;
-				width: fit-content;
-				padding: 0.5rem;
-				background-color: white;
-				border: 1px solid gray;
-				border-radius: 1rem;
-			"
-		>
-			<img class="profiles" src="<%= receiver.profilePicUrl %>" alt="" />
-			<h3 style="margin: 0; align-self: center">
-				<%= receiver.username %>
-			</h3>
-			<p>Followers: <%= follow.followers.username %></p>
-			<p>Following: <%= follow.following.username %></p>
+		<div style="display: flex; flex-wrap: wrap">
+			<div
+				style="
+					display: flex;
+					flex-direction: column;
+					width: fit-content;
+					padding: 0.5rem;
+					margin: 0.5rem;
+					background-color: white;
+					border: 1px solid gray;
+					border-radius: 1rem;
+				"
+			>
+				<div style="width: fit-content; text-align: center">
+					<img
+						class="profiles"
+						src="<%= receiver.profilePicUrl %>"
+						alt=""
+					/>
+					<h3 style="margin: 0"><%= receiver.username %></h3>
+				</div>
+				<div style="display: flex">
+					<form action="/follow/<%= receiver._id %>" method="post">
+						<button class="btn" type="submit">Follow</button>
+					</form>
+					<form action="/unfollow/<%= receiver._id %>" method="post">
+						<button class="btn" type="submit">Unfollow</button>
+					</form>
+				</div>
+				<% follow.followers.forEach(follower => { %> Followers:
+				<p
+					style="
+						margin: 0.2rem 0;
+						opacity: 0.8;
+						max-width: 25rem;
+						display: inline-block;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					"
+				>
+					<%= follower.username %>
+				</p>
+				<% }) %> <% follow.following.forEach(following => { %>
+				Following:
+				<p
+					style="
+						margin: 0.2rem 0;
+						opacity: 0.8;
+						max-width: 25rem;
+						display: inline-block;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					"
+				>
+					<%= following.username %>
+				</p>
+				<% }) %>
+			</div>
+			<div
+				style="
+					background-color: lavender;
+					flex-grow: 1;
+					min-width: 60%;
+					border-radius: 1rem;
+					padding: 0.5rem;
+					margin: 0.5rem;
+				"
+			>
+				<form
+					style="display: flex"
+					action="/privateChat/<%= sender._id %>/<%= receiver._id %>"
+					method="post"
+				>
+					<label for="Messages"></label>
+					<input
+						style="flex-grow: 1"
+						class="input-box"
+						placeholder="Whisper"
+						maxlength="160"
+						type="text"
+						name="message"
+					/>
+					<button class="btn" type="submit">Send</button>
+				</form>
+				<% privates.reverse().forEach(private => { %>
+				<p style="margin: 0">
+					<%= private.sender.username %>
+					<br />
+					~&nbsp;
+					<span style="color: gray"><%= private.messages %></span>
+					<span style="font-size: 0.7rem">
+						<%= private.timestamp.toLocaleTimeString([], {timeZone:
+						'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
+						%>
+					</span>
+				</p>
+				<br />
+				<% }) %>
+			</div>
 		</div>
-		<form
-			action="/privateChat/<%= sender._id %>/<%= receiver._id %>"
-			method="post"
-		>
-			<label for="Messages">Whisper:</label>
-			<input
-				class="input-box"
-				style="width: 50%"
-				placeholder="*Character limit: 160"
-				maxlength="160"
-				type="text"
-				name="message"
-			/>
-			<button class="btn" type="submit">Send</button>
-		</form>
-		<% privates.reverse().forEach(private => { %>
-		<p style="margin: 0">
-			<%= private.sender.username %>
-			<br />
-			~&nbsp; <span style="color: gray"><%= private.messages %></span>
-			<span style="font-size: 0.7rem">
-				<%= private.timestamp.toLocaleTimeString([], {timeZone:
-				'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }); %>
-			</span>
-		</p>
-		<br />
-		<% }) %>
 	</body>
 </html>

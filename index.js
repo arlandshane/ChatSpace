@@ -202,12 +202,6 @@ app.get("/privateChat", async (req, res) => {
 });
 
 app.get("/privateChat/:sender/:receiver", async (req, res) => {
-	console.log(
-		"req.session.userId: " +
-			req.session.userId +
-			" and req.params.sender: " +
-			req.params.sender
-	);
 	if (req.session.userId.toString() === req.params.sender) {
 		try {
 			const privates = await Private.find({
@@ -268,6 +262,34 @@ app.post("/privateChat/:sender/:receiver", async (req, res) => {
 		);
 	} catch (err) {
 		res.status(400).json({ message: err.message });
+	}
+});
+
+app.post("/follow/:id", async (req, res) => {
+	try {
+		await User.findByIdAndUpdate(req.params.id, {
+			$addToSet: { followers: req.session.userId },
+		});
+		await User.findByIdAndUpdate(req.session.userId, {
+			$addToSet: { following: req.params.id },
+		});
+		res.redirect(`/privateChat/${req.session.userId}/${req.params.id}`);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+app.post("/unfollow/:id", async (req, res) => {
+	try {
+		await User.findByIdAndUpdate(req.params.id, {
+			$pull: { followers: req.session.userId },
+		});
+		await User.findByIdAndUpdate(req.session.userId, {
+			$pull: { following: req.params.id },
+		});
+		res.redirect(`/privateChat/${req.session.userId}/${req.params.id}`);
+	} catch (err) {
+		console.log(err);
 	}
 });
 
