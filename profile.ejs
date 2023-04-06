@@ -38,8 +38,8 @@
 						Connect Google
 					</button>
 				</a>
-				<p>Followers: <%= user.followers %></p>
-				<p>Following: <%= user.following %></p>
+				<p>Followers: <%= user.followers.length %></p>
+				<p>Following: <%= user.following.length %></p>
 			</div>
 			<% if (google === "unknown") { %>
 			<p>No Google Account connected</p>

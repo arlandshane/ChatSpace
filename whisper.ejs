@@ -40,15 +40,25 @@
 					/>
 					<h3 style="margin: 0"><%= receiver.username %></h3>
 				</div>
-				<div style="display: flex">
-					<form action="/follow/<%= receiver._id %>" method="post">
-						<button class="btn" type="submit">Follow</button>
-					</form>
-					<form action="/unfollow/<%= receiver._id %>" method="post">
-						<button class="btn" type="submit">Unfollow</button>
-					</form>
-				</div>
-				<% follow.followers.forEach(follower => { %> Followers:
+
+				<% if(receiver.followers.includes(sender._id)) { %>
+				<form
+					style="align-self: center"
+					action="/unfollow/<%= receiver._id %>"
+					method="post"
+				>
+					<button class="btn" type="submit">Unfollow</button>
+				</form>
+				<% } else { %>
+				<form
+					style="align-self: center"
+					action="/follow/<%= receiver._id %>"
+					method="post"
+				>
+					<button class="btn" type="submit">Follow</button>
+				</form>
+				<% } %>
+
 				<p
 					style="
 						margin: 0.2rem 0;
@@ -60,10 +70,8 @@
 						text-overflow: ellipsis;
 					"
 				>
-					<%= follower.username %>
+					Followers: <%= receiver.followers.length %>
 				</p>
-				<% }) %> <% follow.following.forEach(following => { %>
-				Following:
 				<p
 					style="
 						margin: 0.2rem 0;
@@ -75,9 +83,8 @@
 						text-overflow: ellipsis;
 					"
 				>
-					<%= following.username %>
+					Following: <%= receiver.following.length %>
 				</p>
-				<% }) %>
 			</div>
 			<div
 				style="
@@ -95,14 +102,19 @@
 					method="post"
 				>
 					<label for="Messages"></label>
-					<input
-						style="flex-grow: 1"
+					<textarea
+						style="
+							flex-grow: 1;
+							min-height: 5rem;
+							font-size: 1rem;
+							padding: 0.3rem;
+						"
 						class="input-box"
 						placeholder="Whisper"
 						maxlength="160"
 						type="text"
 						name="message"
-					/>
+					></textarea>
 					<button class="btn" type="submit">Send</button>
 				</form>
 				<% privates.reverse().forEach(private => { %>
