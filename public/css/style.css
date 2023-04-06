@@ -1,8 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
 @media (max-width: 768px) {
-	#your-spaces {
+	#your-spaces,
+	#home-username {
 		display: none;
+	}
+	.tabs {
+		height: 2.5rem;
+		cursor: pointer;
+		font-size: 1rem;
+		background: none;
+		border-radius: 0.5rem;
+		white-space: nowrap;
+		border: none;
+		padding-right: 0.5rem !important;
+		text-align: left;
+		transition-duration: 300ms;
 	}
 }
 @media (min-width: 768px) {
@@ -17,17 +30,20 @@ body {
 }
 
 nav {
+	caret-color: transparent;
 	display: flex;
 	justify-content: space-between;
 	padding: 1rem;
 }
 
 a {
+	caret-color: transparent;
 	text-decoration: none;
 	color: black;
 }
 
 h1 {
+	caret-color: transparent;
 	margin: 0;
 	align-self: center;
 }
@@ -89,6 +105,7 @@ h1 {
 }
 
 .btn {
+	cursor: pointer;
 	margin: 0.5rem;
 	min-width: 4.5rem;
 	width: fit-content;
@@ -103,12 +120,27 @@ h1 {
 	background-color: rgba(100, 150, 250, 0.2);
 }
 
+.tabs {
+	height: 2.5rem;
+	cursor: pointer;
+	font-size: 1rem;
+	background: none;
+	border-radius: 0.5rem;
+	white-space: nowrap;
+	border: none;
+	text-align: left;
+	width: 100%;
+	padding-right: 3rem;
+	transition-duration: 300ms;
+}
+
 ::placeholder {
 	padding-left: 0.5rem;
 	font-size: 1rem;
 }
 
 .each-message {
+	caret-color: transparent;
 	margin: 0.5rem;
 	padding: 0.3rem 0.5rem;
 	background-color: #ecf2ff;

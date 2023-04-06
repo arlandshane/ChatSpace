@@ -10,10 +10,25 @@
 			href="/icons/favicon.png"
 			type="image/x-icon"
 		/>
+		<style>
+			.tabs:hover {
+				background-color: lavender;
+			}
+			.fa-bars {
+				caret-color: transparent;
+				align-self: center;
+				cursor: pointer;
+			}
+		</style>
+		<script
+			src="https://kit.fontawesome.com/cd9e976117.js"
+			crossorigin="anonymous"
+		></script>
 	</head>
 
 	<body>
 		<nav style="padding: 0 1rem">
+			<i id="bars" class="fa-solid fa-bars fa-2xl"></i>
 			<h1>Chat Space</h1>
 			<div>
 				<% if (currentUser) { %>
@@ -26,7 +41,7 @@
 					"
 					href="/user/<%= currentUser.username %>"
 				>
-					<p><%= currentUser.username %></p>
+					<p id="home-username"><%= currentUser.username %></p>
 					<img
 						class="avatar"
 						src="<%= currentUser.profilePicUrl %>"
@@ -57,32 +72,51 @@
 			</button>
 			<% } }) %>
 		</div> -->
-		<div style="display: flex; flex-wrap: nowrap; overflow-x: auto">
-			<a href="/privateChat">
-				<button class="btn" style="border-radius: 0.5rem">
-					People
-				</button>
-			</a>
-			<a href="/spaces">
-				<button class="btn" style="border-radius: 0.5rem">
-					Spaces
-				</button>
-			</a>
-			<a href="/spacify">
-				<button class="btn" style="border-radius: 0.5rem">
-					Spacify
-				</button>
-			</a>
-			<a href="/spacetube">
-				<button class="btn" style="border-radius: 0.5rem">
-					SpaceTube
-				</button>
-			</a>
-			<button id="chat" class="btn" style="border-radius: 0.5rem">
-				Post
-			</button>
-		</div>
+
 		<div style="display: flex">
+			<div
+				id="side-tabs"
+				style="
+					display: none;
+					width: max-content;
+					flex-direction: column;
+					justify-content: space-around;
+				"
+			>
+				<a href="/privateChat">
+					<button class="tabs">
+						<i class="fa-solid fa-user-group"></i>
+						People
+					</button>
+				</a>
+				<a href="/spaces">
+					<button class="tabs">
+						<i class="fa-solid fa-layer-group"></i>
+						Spaces
+					</button>
+				</a>
+				<a href="/spacify">
+					<button class="tabs">
+						<i class="fa-brands fa-spotify"></i>
+						Spacify
+					</button>
+				</a>
+				<a href="/spacetube">
+					<button class="tabs">
+						<i class="fa-brands fa-youtube"></i>
+						SpaceTube
+					</button>
+				</a>
+				<button
+					id="chat"
+					class="tabs"
+					style="background-color: #222831; color: whitesmoke"
+				>
+					<i class="fa-solid fa-plus"></i>
+					Post
+				</button>
+			</div>
+
 			<div>
 				<form style="display: none" id="form" action="/" method="post">
 					<textarea
@@ -103,7 +137,7 @@
 						Send
 					</button>
 				</form>
-				<div id="blur" style="overflow: auto; height: 80vh">
+				<div id="blur" style="overflow: auto; height: 85vh">
 					<h2 style="margin-left: 1rem">Posts:</h2>
 					<% persons.slice().reverse().forEach((person) => { %>
 					<div style="display: flex; margin-left: 0.5rem">
@@ -195,6 +229,22 @@
 					chat.style.backgroundColor = "white";
 					chat.style.color = "black";
 					form.style.display = "none";
+				}
+			});
+
+			const side = document.getElementById("side-tabs");
+			const bars = document.getElementById("bars");
+			bars.style.transitionDuration = "500ms";
+			let rotated = false;
+			bars.addEventListener("click", () => {
+				if (!rotated) {
+					bars.style.transform = "rotate(180deg)";
+					side.style.display = "flex";
+					rotated = true;
+				} else {
+					bars.style.transform = "";
+					side.style.display = "none";
+					rotated = false;
 				}
 			});
 		</script>
