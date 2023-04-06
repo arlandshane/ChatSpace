@@ -3,16 +3,12 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title><%= receiver.username %></title>
+		<title>Whisper</title>
 		<link rel="stylesheet" href="/css/style.css" />
 	</head>
 	<body>
 		<nav style="padding: 0 1rem">
-			<h1>
-				<span style="font-size: medium; font-weight: normal"
-					><%= sender.username %></span
-				>/<%= receiver.username %>
-			</h1>
+			<h1>Whisper</h1>
 			<div style="display: flex">
 				<a href="/privateChat"
 					><button type="button" class="btn">
@@ -23,6 +19,24 @@
 			</div>
 		</nav>
 		<hr />
+		<div
+			style="
+				display: flex;
+				flex-direction: column;
+				width: fit-content;
+				padding: 0.5rem;
+				background-color: white;
+				border: 1px solid gray;
+				border-radius: 1rem;
+			"
+		>
+			<img class="profiles" src="<%= receiver.profilePicUrl %>" alt="" />
+			<h3 style="margin: 0; align-self: center">
+				<%= receiver.username %>
+			</h3>
+			<p>Followers: <%= follow.followers.username %></p>
+			<p>Following: <%= follow.following.username %></p>
+		</div>
 		<form
 			action="/privateChat/<%= sender._id %>/<%= receiver._id %>"
 			method="post"

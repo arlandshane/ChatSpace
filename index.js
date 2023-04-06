@@ -224,11 +224,20 @@ app.get("/privateChat/:sender/:receiver", async (req, res) => {
 			})
 				.populate("sender")
 				.sort({ timestamp: 1 });
+			const follow = await User.findById(req.params.receiver)
+				.populate({
+					path: "followers",
+					select: "username",
+				})
+				.populate({
+					path: "following",
+					select: "username",
+				});
 			const sender = await User.findById(req.params.sender);
 			const receiver = await User.findById(req.params.receiver);
 			ejs.renderFile(
 				path.join(__dirname, "/whisper.ejs"),
-				{ privates, sender, receiver },
+				{ privates, sender, receiver, follow },
 				(err, html) => {
 					if (err) {
 						console.log(err);
