@@ -5,6 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Whisper</title>
 		<link rel="stylesheet" href="/css/style.css" />
+		<link
+			rel="shortcut icon"
+			href="/icons/favicon.png"
+			type="image/x-icon"
+		/>
 	</head>
 	<body>
 		<nav style="padding: 0 1rem">
@@ -110,26 +115,28 @@
 							padding: 0.3rem;
 						"
 						class="input-box"
-						placeholder="Whisper"
-						maxlength="160"
+						placeholder="Whisper (max 200 characters)"
+						maxlength="200"
 						type="text"
 						name="message"
 					></textarea>
 					<button class="btn" type="submit">Send</button>
 				</form>
 				<% privates.reverse().forEach(private => { %>
-				<p style="margin: 0">
-					<%= private.sender.username %>
-					<br />
-					~&nbsp;
-					<span style="color: gray"><%= private.messages %></span>
-					<span style="font-size: 0.7rem">
-						<%= private.timestamp.toLocaleTimeString([], {timeZone:
-						'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
-						%>
-					</span>
-				</p>
-				<br />
+				<div style="display: flex">
+					<p class="each-message" style="word-wrap: break-word">
+						<%= private.sender.username %>
+						<span
+							style="
+								opacity: 0.8;
+								font-weight: lighter;
+								white-space: pre-line;
+							"
+						>
+							~&nbsp;<%= private.messages %>
+						</span>
+					</p>
+				</div>
 				<% }) %>
 			</div>
 		</div>

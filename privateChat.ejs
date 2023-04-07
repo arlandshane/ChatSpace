@@ -12,7 +12,48 @@
 			<a href="/"><button type="button" class="btn">Home</button></a>
 		</nav>
 		<hr />
-
+		<h3>Following:</h3>
+		<div class="private-users-div">
+			<% if(currentUser.following.length === 0) { %>
+			<p>None</p>
+			<% } else { %> <% currentUser.following.forEach(followings => { %>
+			<div style="text-align: center">
+				<a
+					href="/privateChat/<%= currentUser._id %>/<%= followings._id %>"
+				>
+					<div
+						style="
+							align-self: center;
+							margin-top: 0.5rem;
+							font-size: smaller;
+							text-decoration: none;
+							color: black;
+						"
+					>
+						<img
+							class="profiles"
+							src="<%= followings.profilePicUrl %>"
+							alt=""
+						/>
+					</div>
+					<div
+						style="
+							font-size: smaller;
+							overflow: hidden;
+							display: inline-block;
+							text-align: center;
+							white-space: nowrap;
+							max-width: 7rem;
+							text-overflow: ellipsis;
+						"
+					>
+						<%= followings.username %>
+					</div>
+				</a>
+			</div>
+			<% }) %> <% } %>
+		</div>
+		<h3>All Users:</h3>
 		<div class="private-users-div">
 			<% users.forEach(user => { %> <% if(sender.username !==
 			user.username) { %>

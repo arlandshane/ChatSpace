@@ -29,7 +29,23 @@
 	<body>
 		<nav style="padding: 0 1rem">
 			<i id="bars" class="fa-solid fa-bars fa-2xl"></i>
-			<h1>Chat Space</h1>
+			<h1
+				style="
+					position: absolute;
+					left: 50%;
+					transform: translate(-50%);
+				"
+			>
+				Chat Space<sub
+					style="
+						font-size: 0.7rem;
+						font-weight: normal;
+						color: limegreen;
+					"
+				>
+					Beta
+				</sub>
+			</h1>
 			<div>
 				<% if (currentUser) { %>
 				<a
@@ -52,26 +68,6 @@
 			</div>
 		</nav>
 		<hr />
-		<!-- <div
-			style="
-				display: flex;
-				flex-wrap: nowrap;
-				overflow-x: auto;
-			"
-		>
-			<% users.forEach(user => { %> <% if(currentUser.username !==
-			user.username) { %>
-			<button
-				type="button"
-				class="btn"
-				style="width: fit-content; border-radius: 0.5rem"
-			>
-				<a href="/privateChat/<%= currentUser._id %>/<%= user._id %>">
-					<%= user.username %>
-				</a>
-			</button>
-			<% } }) %>
-		</div> -->
 
 		<div style="display: flex">
 			<div
@@ -112,9 +108,40 @@
 					class="tabs"
 					style="background-color: #222831; color: whitesmoke"
 				>
-					<i class="fa-solid fa-plus"></i>
+					<i class="fa-solid fa-paper-plane"></i>
 					Post
 				</button>
+				<div
+					style="
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						margin: 1rem 0;
+					"
+				>
+					<a
+						style="
+							text-decoration: none;
+							color: black;
+							font-family: 'Segoe UI', Tahoma, Geneva, Verdana,
+								sans-serif;
+							align-self: center;
+						"
+						href="https://arlandshane.com"
+						target="_blank"
+					>
+						<i class="fa-regular fa-copyright"></i> 2023 Shane
+						Arland
+					</a>
+					<br />
+					<a title="Mock Terms of Use" href="/terms-of-service"
+						>Terms of Service</a
+					>
+					<br />
+					<a title="Mock Privacy Policy" href="/privacy-policy"
+						>Privacy Policy</a
+					>
+				</div>
 			</div>
 
 			<div>
@@ -181,39 +208,6 @@
 				</a>
 			</div>
 		</div>
-		<!-- 
-		<hr />
-		<footer>
-			<div
-				style="display: flex; justify-content: flex-end; margin: 1rem 0"
-			>
-				<a
-					style="
-						text-decoration: none;
-						color: black;
-						font-family: 'Segoe UI', Tahoma, Geneva, Verdana,
-							sans-serif;
-						align-self: center;
-					"
-					href="https://arlandshane.com"
-					target="_blank"
-				>
-					©️ 2023 Shane Arland
-				</a>
-				<a href="/terms-of-service">
-					<button style="width: fit-content" class="btn">
-						Terms of Service
-					</button>
-				</a>
-
-				<a href="/privacy-policy">
-					<button style="width: fit-content" class="btn">
-						Privacy Policy
-					</button>
-				</a>
-			</div>
-		</footer>
-		-->
 		<script defer>
 			const form = document.getElementById("form");
 			const chat = document.getElementById("chat");

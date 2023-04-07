@@ -183,10 +183,14 @@ app.get("/logout", (req, res) => {
 app.get("/privateChat", async (req, res) => {
 	try {
 		const users = await User.find();
+		const currentUser = await User.findById(req.session.userId).populate({
+			path: "following",
+			select: "username profilePicUrl",
+		});
 		const sender = await User.findById(req.session.userId);
 		ejs.renderFile(
 			path.join(__dirname, "/privateChat.ejs"),
-			{ users, sender },
+			{ users, sender, currentUser },
 			(err, html) => {
 				if (err) {
 					console.log(err);

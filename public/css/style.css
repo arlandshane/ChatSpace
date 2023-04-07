@@ -130,7 +130,8 @@ h1 {
 	border: none;
 	text-align: left;
 	width: 100%;
-	padding-right: 3rem;
+	padding-left: 1rem;
+	padding-right: 4rem;
 	transition-duration: 300ms;
 }
 
