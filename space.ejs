@@ -140,13 +140,19 @@
 					<% if(message.sender && message.sender.username) { %> <%=
 					message.sender.username %> <% } else { %> unknown <% } %>
 					<br />
-					~&nbsp; <span style="color: gray"><%= message.text %></span>
-					<span style="font-size: 0.7rem"
-						><%= message.timestamp.toLocaleTimeString([], {timeZone:
-						'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
-						%>
-					</span>
+					<span style="color: gray; padding-left: 0.7rem"
+						><%= message.text %></span
+					>
 				</p>
+				<span
+					style="
+						font-size: 0.7rem;
+						align-self: flex-end;
+						padding-bottom: 0.5rem;
+					"
+					><%= message.timestamp.toLocaleTimeString([], {timeZone:
+					'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }); %>
+				</span>
 			</div>
 			<% }) %>
 		</div>

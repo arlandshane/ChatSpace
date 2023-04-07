@@ -24,7 +24,7 @@
 			</div>
 		</nav>
 		<hr />
-		<div style="display: flex; flex-wrap: wrap">
+		<div style="display: flex">
 			<div
 				style="
 					display: flex;
@@ -101,6 +101,34 @@
 					margin: 0.5rem;
 				"
 			>
+				<div id="private-overflow-div">
+					<% privates.forEach(private => { %>
+					<div style="display: flex">
+						<p class="each-message" style="word-wrap: break-word">
+							<%= private.sender.username %>
+							<span
+								style="
+									opacity: 0.8;
+									font-weight: lighter;
+									white-space: pre-line;
+								"
+							>
+								~&nbsp;<%= private.messages %>
+							</span>
+						</p>
+						<span
+							style="
+								font-size: 0.7rem;
+								align-self: flex-end;
+								padding-bottom: 0.5rem;
+							"
+							><%= private.timestamp.toLocaleTimeString([],
+							{timeZone: 'Asia/Kolkata', hour: '2-digit', minute:
+							'2-digit' }); %>
+						</span>
+					</div>
+					<% }) %>
+				</div>
 				<form
 					style="display: flex"
 					action="/privateChat/<%= sender._id %>/<%= receiver._id %>"
@@ -122,23 +150,15 @@
 					></textarea>
 					<button class="btn" type="submit">Send</button>
 				</form>
-				<% privates.reverse().forEach(private => { %>
-				<div style="display: flex">
-					<p class="each-message" style="word-wrap: break-word">
-						<%= private.sender.username %>
-						<span
-							style="
-								opacity: 0.8;
-								font-weight: lighter;
-								white-space: pre-line;
-							"
-						>
-							~&nbsp;<%= private.messages %>
-						</span>
-					</p>
-				</div>
-				<% }) %>
 			</div>
 		</div>
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				var autoScroll = document.getElementById(
+					"private-overflow-div"
+				);
+				autoScroll.scrollTop = autoScroll.scrollHeight;
+			});
+		</script>
 	</body>
 </html>

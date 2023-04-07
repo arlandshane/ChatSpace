@@ -60,6 +60,12 @@ h1 {
 	margin: 0.5rem;
 }
 
+#private-overflow-div {
+	max-width: 80vw;
+	max-height: 65vh;
+	overflow: auto;
+}
+
 #your-spaces {
 	flex-direction: column;
 	border-radius: 1rem;
