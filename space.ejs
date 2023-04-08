@@ -39,13 +39,28 @@
 				border: 1px solid lavender;
 				padding: 0.2rem;
 				border-radius: 0.5rem;
+				font-weight: bold;
 				width: fit-content;
 			"
 		>
 			<i class="fa-solid fa-circle-info"></i>
-			<span style="font-weight: bold">Description:</span>
-			<%= space.description %>
+			Description:
+			<span style="font-weight: normal"><%= space.description %></span>
 		</p>
+		<% } else { %>
+		<!-- <p
+			id="edit-description"
+			style="
+				border: 1px solid lavender;
+				padding: 0.2rem;
+				border-radius: 0.5rem;
+				font-weight: bold;
+				width: fit-content;
+			"
+		>
+			<span style="font-weight: normal">Write a description:</span>
+			<i class="fa-solid fa-pen-nib"></i>
+		</p> -->
 		<% } %>
 
 		<div
@@ -158,7 +173,13 @@
 		</div>
 		<div style="display: none" class="hide">
 			<h2>Messages:</h2>
-			<% space.messages.reverse().forEach((message) => { %>
+			<% let prevDate = null; %> <%
+			space.messages.reverse().forEach((message) => { %> <% const options
+			= { month: 'long', day: 'numeric' }; %> <% const currDate =
+			message.timestamp.toLocaleDateString('en-US', options); %> <% if
+			(currDate !== prevDate) { %>
+			<p class="date-separator"><%= currDate %></p>
+			<% prevDate = currDate; %> <% } %>
 			<div style="display: flex">
 				<p class="each-message">
 					<% if(message.sender && message.sender.username) { %> <%=

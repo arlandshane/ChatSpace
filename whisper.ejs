@@ -102,7 +102,13 @@
 				"
 			>
 				<div id="private-overflow-div">
-					<% privates.forEach(private => { %>
+					<% let prevDate = null; %> <% privates.forEach(private => {
+					%> <% let currDate =
+					private.timestamp.toLocaleDateString('en-US', { month:
+					'long', day: 'numeric' }); %> <% if (currDate !== prevDate)
+					{ %>
+					<p class="date-separator"><%= currDate %></p>
+					<% prevDate = currDate; %> <% } %>
 					<div style="display: flex">
 						<p class="each-message" style="word-wrap: break-word">
 							<%= private.sender.username %>
