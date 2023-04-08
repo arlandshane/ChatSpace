@@ -5,6 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Create Space</title>
 		<link rel="stylesheet" href="/css/style.css" />
+		<link
+			rel="shortcut icon"
+			href="/icons/favicon.png"
+			type="image/x-icon"
+		/>
 	</head>
 	<body>
 		<nav style="padding: 0 1rem">
@@ -26,10 +31,31 @@
 				name="name"
 				placeholder="Space Name"
 			/>
+			<div
+				style="
+					white-space: nowrap;
+					font-size: small;
+					font-style: italic;
+				"
+			>
+				*Max length: 20 characters
+			</div>
+			<br />
+			<label for="description">Description:</label>
+			<textarea
+				style="
+					max-width: 70vw;
+					width: 20vw;
+					height: 5rem;
+					padding: 0.5rem;
+					border-radius: 0.5rem;
+				"
+				type="text"
+				name="description"
+				maxlength="100"
+				placeholder="Max 100 characters"
+			></textarea>
 			<button class="btn" type="submit">Create</button>
 		</form>
-		<div style="white-space: nowrap; font-size: small; font-style: italic">
-			*Max length: 20 characters
-		</div>
 	</body>
 </html>

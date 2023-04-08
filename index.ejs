@@ -169,15 +169,15 @@
 					<% persons.slice().reverse().forEach((person) => { %>
 					<div style="display: flex; margin-left: 0.5rem">
 						<p class="each-message">
-							<%= person.name %>
+							<%= person.name %> <br />
 							<span
 								style="
 									opacity: 0.8;
+									margin-left: 0.5rem;
 									font-weight: lighter;
-									white-space: pre-line;
 								"
 							>
-								~&nbsp;<%= person.message %>
+								<%= person.message %>
 							</span>
 						</p>
 					</div>

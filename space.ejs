@@ -5,6 +5,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title><%= space.name %></title>
 		<link rel="stylesheet" href="/css/style.css" />
+		<link
+			rel="shortcut icon"
+			href="/icons/favicon.png"
+			type="image/x-icon"
+		/>
+		<script
+			src="https://kit.fontawesome.com/cd9e976117.js"
+			crossorigin="anonymous"
+		></script>
 	</head>
 	<body>
 		<nav style="padding: 0 1rem">
@@ -23,6 +32,21 @@
 			</div>
 		</nav>
 		<hr />
+
+		<% if(space.description) { %>
+		<p
+			style="
+				border: 1px solid lavender;
+				padding: 0.2rem;
+				border-radius: 0.5rem;
+				width: fit-content;
+			"
+		>
+			<i class="fa-solid fa-circle-info"></i>
+			<span style="font-weight: bold">Description:</span>
+			<%= space.description %>
+		</p>
+		<% } %>
 
 		<div
 			style="

@@ -294,9 +294,9 @@ app.get("/createSpace", async (req, res) => {
 
 app.post("/createSpace", async (req, res) => {
 	try {
-		const { name } = req.body;
+		const { name, description } = req.body;
 		const participants = req.session.userId;
-		const space = new Space({ name, participants });
+		const space = new Space({ name, participants, description });
 		await space.save();
 		res.redirect("/spaces");
 	} catch (err) {
